@@ -1,11 +1,12 @@
 # Software & Bots Shard Collection
 
-General runtime environments, Discord bot hosts, web servers, proxies, webmail, and monitoring tools for **Midnight Panel**.
+General runtime environments, Discord bot hosts, web servers, proxies, webmail, database managers, and monitoring tools for **Midnight Panel**.
 
 ## Available Shards
 
 | Runtime / Tool | Default Image | Target Use Case | Status |
 |---|---|---|---|
+| **[Adminer](adminer.json)** | `ghcr.io/midnight-panel/php:8.3` | Lightweight web GUI for MySQL, MariaDB, PostgreSQL & SQLite | Verified |
 | **[Roundcube Webmail](roundcube.json)** | `ghcr.io/midnight-panel/php:8.3` | Modern browser-based IMAP webmail client with desktop-like UI | Verified |
 | **[Mail Server (Mailpit)](mail-server.json)** | `ghcr.io/midnight-panel/base:debian` | Standalone SMTP server with Webmail UI for testing & bots | Verified |
 | **[Uptime Kuma](uptime-kuma.json)** | `ghcr.io/midnight-panel/nodejs:20` | Fancy self-hosted monitoring and public status pages | Verified |

@@ -22,7 +22,7 @@ See the full [Containers Specification and Guide](containers/README.md) for Dock
 
 ## 📦 Shard Collections & Catalog
 
-The repository currently includes **34 verified Shards** across 5 collections:
+The repository currently includes **35 verified Shards** across 5 collections:
 
 ### 🎮 Minecraft (`minecraft/`)
 | Shard | File | Version | Default Docker Image | Description |
@@ -53,6 +53,7 @@ The repository currently includes **34 verified Shards** across 5 collections:
 ### 🤖 Software, Tools & Bots (`software/`)
 | Shard | File | Default Docker Image | Description |
 |---|---|---|---|
+| **Adminer** | [`adminer.json`](software/adminer.json) | `ghcr.io/midnight-panel/php:8.3` | Lightweight web GUI for MySQL, MariaDB, PostgreSQL & SQLite |
 | **Roundcube Webmail** | [`roundcube.json`](software/roundcube.json) | `ghcr.io/midnight-panel/php:8.3` | Browser-based IMAP client with rich MIME & address book |
 | **Uptime Kuma** | [`uptime-kuma.json`](software/uptime-kuma.json) | `ghcr.io/midnight-panel/nodejs:20` | Fancy self-hosted monitoring and status pages |
 | **Cloudflare Tunnel** | [`cloudflared.json`](software/cloudflared.json) | `ghcr.io/midnight-panel/base:debian` | Expose games/apps to web without open router ports |

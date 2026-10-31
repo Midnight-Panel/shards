@@ -1,7 +1,7 @@
 {
   "schemaVersion": "midnight_shard_catalog_v1",
-  "generatedAt": "2026-10-31T18:15:32.081Z",
-  "totalShards": 34,
+  "generatedAt": "2026-10-31T18:19:20.716Z",
+  "totalShards": 35,
   "shards": [
     {
       "id": "mariadb",
@@ -244,6 +244,17 @@
       "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/velocity.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/velocity.json"
+    },
+    {
+      "id": "adminer",
+      "collection": "Software & Bots",
+      "name": "Adminer",
+      "description": "Ultra-lightweight, full-featured web-based database management tool supporting MySQL, MariaDB, PostgreSQL, and SQLite with a clean dark theme.",
+      "author": "Jakub Vrána & Midnight Team",
+      "version": "4.8.1",
+      "defaultImage": "ghcr.io/midnight-panel/php:8.3",
+      "file": "software/adminer.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/adminer.json"
     },
     {
       "id": "cloudflared",
