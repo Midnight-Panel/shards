@@ -20,7 +20,8 @@ RUN apt update \
         python3 \
         procps \
         ffmpeg \
-    && npm install -g pnpm yarn \
+    && npm install -g pnpm typescript ts-node tsx \
+    && corepack enable \
     && usermod -l container -d /home/container -m -s /bin/bash node \
     && groupmod -n container node \
     && rm -rf /var/lib/apt/lists/*
