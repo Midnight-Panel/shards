@@ -1,0 +1,76 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "FiveM (txAdmin)",
+    "description": "Official GTA V FiveM multiplayer dedicated server (FXServer) with integrated txAdmin web management panel, automated recipe setup (QBCore, ESX, CFX Default), live console, player manager, and Discord bot integration.",
+    "author": "CitizenFX, Tabarra & Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Midnight FiveM / txAdmin (Recommended)": "ghcr.io/midnight-panel/games:fivem",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks FiveM (Fallback)": "ghcr.io/pterodactyl/games:fivem"
+    },
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:fivem",
+    "startupCommand": "./run.sh +set serverProfile {{SERVER_PROFILE}} +set txAdminPort {{TXADMIN_PORT}} +set net_tcpPort {{SERVER_PORT}} +set net_udpPort {{SERVER_PORT}} {{ADDITIONAL_ARGS}}",
+    "stopCommand": "quit",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "txAdmin is listening on",
+    "installScript": "#!/bin/bash\n# FiveM (txAdmin) Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl xz-utils tar ca-certificates\n\ncd /mnt/server\n\nif [ -z \"${FIVEM_VERSION}\" ] || [ \"${FIVEM_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest FiveM / FXServer recommended artifacts...\"\n    DOWNLOAD_URL=$(curl -s https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/ | grep -Eo 'https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/[0-9]+-[a-f0-9]+/fx.tar.xz' | head -n 1)\n    if [ -z \"${DOWNLOAD_URL}\" ]; then\n        DOWNLOAD_URL=\"https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/fx.tar.xz\"\n    fi\nelse\n    DOWNLOAD_URL=\"https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VERSION}/fx.tar.xz\"\nfi\n\necho \"Downloading FXServer from ${DOWNLOAD_URL}...\"\ncurl -sSL -o fx.tar.xz \"${DOWNLOAD_URL}\"\n\necho \"Extracting FXServer files...\"\ntar -xJf fx.tar.xz\nrm -f fx.tar.xz\n\nchmod +x run.sh\nif [ -f \"alpine/opt/cfx-server/FXServer\" ]; then\n    chmod +x alpine/opt/cfx-server/FXServer\nfi\n\necho \"FiveM (txAdmin) installation completed successfully!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "txAdmin Web Port",
+        "description": "Port used by the txAdmin web administration interface (usually 40120).",
+        "envVariable": "TXADMIN_PORT",
+        "defaultValue": "40120",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 1
+      },
+      {
+        "name": "Server Profile",
+        "description": "Server profile folder name used by txAdmin to store configurations and databases.",
+        "envVariable": "SERVER_PROFILE",
+        "defaultValue": "default",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 2
+      },
+      {
+        "name": "FiveM Version",
+        "description": "FXServer build identifier or 'latest'.",
+        "envVariable": "FIVEM_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 3
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Extra arguments passed to FXServer upon start.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "+set txAdminVerbose true",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 4
+      }
+    ]
+  }
+}

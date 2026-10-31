@@ -22,7 +22,7 @@ See the full [Containers Specification and Guide](containers/README.md) for Dock
 
 ## 📦 Shard Collections & Catalog
 
-The repository currently includes **33 verified Shards** across 5 collections:
+The repository currently includes **34 verified Shards** across 5 collections:
 
 ### 🎮 Minecraft (`minecraft/`)
 | Shard | File | Version | Default Docker Image | Description |
@@ -37,8 +37,9 @@ The repository currently includes **33 verified Shards** across 5 collections:
 | **Bedrock BDS** | [`bedrock.json`](minecraft/bedrock.json) | 1.21.50 | `ghcr.io/midnight-panel/games:bedrock` | Official Minecraft Bedrock dedicated server |
 
 ### 🎯 Game Servers (`games/`)
-| Shard | File | App ID | Default Docker Image | Description |
+| Shard | File | App ID / Engine | Default Docker Image | Description |
 |---|---|---|---|---|
+| **FiveM (txAdmin)** | [`fivem-txadmin.json`](games/fivem-txadmin.json) | CitizenFX | `ghcr.io/midnight-panel/games:fivem` | GTA V FiveM server with integrated txAdmin web panel |
 | **Rust** | [`rust.json`](games/rust.json) | 258550 | `ghcr.io/midnight-panel/games:rust` | Rust dedicated server with SteamCMD & Oxide |
 | **Counter-Strike 2** | [`cs2.json`](games/cs2.json) | 730 | `ghcr.io/midnight-panel/games:source` | Valve's CS2 dedicated server on Source 2 |
 | **Palworld** | [`palworld.json`](games/palworld.json) | 2394010 | `ghcr.io/midnight-panel/games:source` | Multiplayer dedicated server on Unreal Engine 5 |

@@ -95,6 +95,10 @@ jobs:
             tag: "bedrock"
             context: ./containers/games/bedrock
             latest: false
+          - name: games
+            tag: "fivem"
+            context: ./containers/games/fivem
+            latest: false
 
           # Installers
           - name: installers

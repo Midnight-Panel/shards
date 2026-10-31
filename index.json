@@ -1,7 +1,7 @@
 {
   "schemaVersion": "midnight_shard_catalog_v1",
-  "generatedAt": "2026-10-31T18:09:04.997Z",
-  "totalShards": 33,
+  "generatedAt": "2026-10-31T18:15:32.081Z",
+  "totalShards": 34,
   "shards": [
     {
       "id": "mariadb",
@@ -79,6 +79,17 @@
       "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/cs2.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/cs2.json"
+    },
+    {
+      "id": "fivem-txadmin",
+      "collection": "Game Servers",
+      "name": "FiveM (txAdmin)",
+      "description": "Official GTA V FiveM multiplayer dedicated server (FXServer) with integrated txAdmin web management panel, automated recipe setup (QBCore, ESX, CFX Default), live console, player manager, and Discord bot integration.",
+      "author": "CitizenFX, Tabarra & Midnight Team",
+      "version": "1.0.0",
+      "defaultImage": "ghcr.io/midnight-panel/games:fivem",
+      "file": "games/fivem-txadmin.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/fivem-txadmin.json"
     },
     {
       "id": "palworld",
