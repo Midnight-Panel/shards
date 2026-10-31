@@ -21,6 +21,7 @@ RUN apt update \
         procps \
         ffmpeg \
     && npm install -g pnpm yarn \
+    && (userdel -r node 2>/dev/null || true) \
     && useradd -d /home/container -m -u 1000 -s /bin/bash container \
     && rm -rf /var/lib/apt/lists/*
 

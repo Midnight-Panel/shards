@@ -82,33 +82,39 @@ jobs:
             context: ./containers/php/8.3
             latest: true
 
-          # Game Runtimes
+          # Game Runtimes (x86_64 only because game engines & SteamCMD are 32/64-bit x86 binaries)
           - name: games
             tag: "source"
             context: ./containers/games/source
             latest: false
+            platforms: "linux/amd64"
           - name: games
             tag: "rust"
             context: ./containers/games/rust
             latest: false
+            platforms: "linux/amd64"
           - name: games
             tag: "bedrock"
             context: ./containers/games/bedrock
             latest: false
+            platforms: "linux/amd64"
           - name: games
             tag: "fivem"
             context: ./containers/games/fivem
             latest: false
+            platforms: "linux/amd64"
 
           # Installers
           - name: installers
             tag: "alpine"
             context: ./containers/installers/alpine
             latest: true
+            platforms: "linux/amd64,linux/arm64"
           - name: installers
             tag: "debian"
             context: ./containers/installers/debian
             latest: false
+            platforms: "linux/amd64"
 
           # Base Runtimes
           - name: base
@@ -155,6 +161,6 @@ jobs:
         with:
           context: .
           file: ${{ matrix.context }}/Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platforms || 'linux/amd64,linux/arm64' }}
           push: true
           tags: ${{ steps.tags.outputs.TAGS }}

@@ -23,9 +23,10 @@ RUN dpkg --add-architecture i386 \
         lib32gcc-s1 \
         lib32stdc++6 \
         lib32z1 \
-        libtinfo5:i386 \
-        libncurses5:i386 \
+        libtinfo6:i386 \
+        libncurses6:i386 \
         libcurl4-gnutls-dev:i386 \
+        libssl3:i386 \
         libstdc++6 \
         libpulse0 \
         libasound2 \
