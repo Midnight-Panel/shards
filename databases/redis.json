@@ -1,0 +1,45 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Databases",
+    "description": "In-memory caches, relational SQL engines and key-value datastores",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Redis",
+    "description": "Open-source in-memory data store used by millions of developers as a database, cache, streaming engine, and message broker.",
+    "author": "Redis Ltd. & Midnight Team",
+    "version": "7.4",
+    "dockerImages": {
+      "Redis 7 (Alpine)": "redis:7-alpine",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "redis:7-alpine",
+    "startupCommand": "redis-server --port {{SERVER_PORT}} --bind 0.0.0.0 --requirepass \"{{REDIS_PASSWORD}}\" --maxmemory {{SERVER_MEMORY}}mb --maxmemory-policy allkeys-lru --dir /home/container/data",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "Ready to accept connections",
+    "installScript": "#!/bin/sh\n# Redis Installation Script for Midnight Panel\nset -e\nmkdir -p /mnt/server/data\necho \"Redis setup complete!\"\n",
+    "installImage": "alpine:latest",
+    "installInterpreter": "/bin/sh",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Redis Password",
+        "description": "Authentication password required for clients executing AUTH command.",
+        "envVariable": "REDIS_PASSWORD",
+        "defaultValue": "ChangeThisSecretPassword!",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string|min:8",
+        "sortOrder": 1
+      }
+    ]
+  }
+}

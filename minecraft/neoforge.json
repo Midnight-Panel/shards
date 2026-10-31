@@ -1,0 +1,54 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Minecraft",
+    "description": "Minecraft game servers, modded runtimes and network proxies",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "NeoForge",
+    "description": "The community-driven modding platform for Minecraft, carrying forward the legacy of Forge with modern tooling.",
+    "author": "NeoForged & Midnight Team",
+    "version": "1.21.1",
+    "dockerImages": {
+      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
+      "Java 17": "ghcr.io/pterodactyl/yolks:java_17"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "startupCommand": "./run.sh nogui",
+    "stopCommand": "stop",
+    "stopSignal": "SIGTERM",
+    "configFiles": [
+      {
+        "path": "server.properties",
+        "parser": "properties",
+        "mappings": {
+          "server-port": "{{SERVER_PORT}}",
+          "server-ip": "{{SERVER_IP}}"
+        }
+      }
+    ],
+    "startupDone": ") Done (",
+    "installScript": "#!/bin/bash\n# NeoForge Server Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq openjdk21-jre-headless\n\ncd /mnt/server\n\nif [ -z \"${NEOFORGE_VERSION}\" ] || [ \"${NEOFORGE_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest NeoForge version...\"\n    NEOFORGE_VERSION=$(curl -s https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge | jq -r '.versions[-1]')\nfi\n\necho \"Target NeoForge version: ${NEOFORGE_VERSION}\"\nINSTALLER_URL=\"https://maven.neoforged.net/releases/net/neoforged/neoforge/${NEOFORGE_VERSION}/neoforge-${NEOFORGE_VERSION}-installer.jar\"\n\necho \"Downloading NeoForge installer from ${INSTALLER_URL}...\"\ncurl -o installer.jar -fSL \"${INSTALLER_URL}\"\n\necho \"Running NeoForge server installation...\"\njava -jar installer.jar --installServer\nrm -f installer.jar\n\nif [ -f \"run.sh\" ]; then\n    chmod +x run.sh\nfi\n\necho \"eula=true\" > eula.txt\necho \"NeoForge installation completed!\"\n",
+    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": true,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "NeoForge Version",
+        "description": "NeoForge version release (e.g. 21.1.93 or 'latest').",
+        "envVariable": "NEOFORGE_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:40",
+        "sortOrder": 1
+      }
+    ]
+  }
+}

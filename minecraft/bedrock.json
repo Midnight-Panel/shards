@@ -1,0 +1,74 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Minecraft",
+    "description": "Minecraft game servers, modded runtimes and network proxies",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Bedrock Dedicated Server",
+    "description": "Official Minecraft Bedrock Dedicated Server software (BDS) supporting mobile, console and Windows cross-play.",
+    "author": "Mojang Studios & Midnight Team",
+    "version": "1.21.50",
+    "dockerImages": {
+      "Bedrock Linux": "ghcr.io/pterodactyl/games:bedrock",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/games:bedrock",
+    "startupCommand": "LD_LIBRARY_PATH=. ./bedrock_server",
+    "stopCommand": "stop",
+    "stopSignal": "SIGINT",
+    "configFiles": [
+      {
+        "path": "server.properties",
+        "parser": "properties",
+        "mappings": {
+          "server-port": "{{SERVER_PORT}}",
+          "server-portv6": "{{SERVER_PORT}}"
+        }
+      }
+    ],
+    "startupDone": "Server started.",
+    "installScript": "#!/bin/bash\n# Bedrock BDS Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl jq unzip ca-certificates\n\ncd /mnt/server\n\nDOWNLOAD_URL=$(curl -s -H \"User-Agent: Mozilla/5.0\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o 'https://www.minecraft.net/bedrockdedicatedserver/bin-linux/[^\"]*' | head -n 1)\n\nif [ -z \"${DOWNLOAD_URL}\" ]; then\n    echo \"Warning: Unable to scrape download link from website, using fallback release endpoint...\"\n    DOWNLOAD_URL=\"https://minecraft.azureedge.net/bin-linux/bedrock-server-1.21.50.07.zip\"\nfi\n\necho \"Downloading Bedrock Dedicated Server from ${DOWNLOAD_URL}...\"\ncurl -H \"User-Agent: Mozilla/5.0\" -fSL -o bedrock-server.zip \"${DOWNLOAD_URL}\"\n\necho \"Extracting files...\"\nunzip -q -o bedrock-server.zip -x server.properties permissions.json allowlist.json\nrm -f bedrock-server.zip\n\nchmod +x bedrock_server\necho \"Bedrock installation complete!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Name",
+        "description": "Name shown in the Bedrock server list.",
+        "envVariable": "SERVER_NAME",
+        "defaultValue": "Midnight Bedrock Server",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:60",
+        "sortOrder": 1
+      },
+      {
+        "name": "Game Mode",
+        "description": "Game mode for new players (survival, creative, adventure).",
+        "envVariable": "GAMEMODE",
+        "defaultValue": "survival",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 2
+      },
+      {
+        "name": "Difficulty",
+        "description": "Game difficulty (peaceful, easy, normal, hard).",
+        "envVariable": "DIFFICULTY",
+        "defaultValue": "easy",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 3
+      }
+    ]
+  }
+}

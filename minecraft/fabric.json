@@ -1,0 +1,85 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Minecraft",
+    "description": "Minecraft game servers, modded runtimes and network proxies",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Fabric",
+    "description": "Fabric is a lightweight, experimental modding toolchain for Minecraft with fast load times and minimal performance impact.",
+    "author": "FabricMC & Midnight Team",
+    "version": "1.21.4",
+    "dockerImages": {
+      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
+      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
+      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}} nogui",
+    "stopCommand": "stop",
+    "stopSignal": "SIGTERM",
+    "configFiles": [
+      {
+        "path": "server.properties",
+        "parser": "properties",
+        "mappings": {
+          "server-port": "{{SERVER_PORT}}",
+          "server-ip": "{{SERVER_IP}}"
+        }
+      }
+    ],
+    "startupDone": ") Done (",
+    "installScript": "#!/bin/bash\n# Fabric Server Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\nif [ -z \"${MINECRAFT_VERSION}\" ] || [ \"${MINECRAFT_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Minecraft game version...\"\n    MINECRAFT_VERSION=$(curl -s https://meta.fabricmc.net/v2/versions/game | jq -r '.[0].version')\nfi\n\nif [ -z \"${FABRIC_LOADER_VERSION}\" ] || [ \"${FABRIC_LOADER_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Fabric loader version...\"\n    FABRIC_LOADER_VERSION=$(curl -s https://meta.fabricmc.net/v2/versions/loader | jq -r '.[0].version')\nfi\n\nif [ -z \"${INSTALLER_VERSION}\" ] || [ \"${INSTALLER_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Fabric installer version...\"\n    INSTALLER_VERSION=$(curl -s https://meta.fabricmc.net/v2/versions/installer | jq -r '.[0].version')\nfi\n\necho \"Installing Fabric (Minecraft: ${MINECRAFT_VERSION}, Loader: ${FABRIC_LOADER_VERSION}, Installer: ${INSTALLER_VERSION})...\"\n\nDOWNLOAD_URL=\"https://meta.fabricmc.net/v2/versions/loader/${MINECRAFT_VERSION}/${FABRIC_LOADER_VERSION}/${INSTALLER_VERSION}/server/jar\"\necho \"Downloading prebuilt server jar from ${DOWNLOAD_URL}...\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\n\necho \"Writing eula.txt...\"\necho \"eula=true\" > eula.txt\n\necho \"Fabric installation complete!\"\n",
+    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": true,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Jar File",
+        "description": "The name of the executable jar file to run Fabric.",
+        "envVariable": "SERVER_JARFILE",
+        "defaultValue": "server.jar",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:40",
+        "sortOrder": 1
+      },
+      {
+        "name": "Minecraft Version",
+        "description": "Minecraft release version, e.g. 1.21.4 or 'latest'.",
+        "envVariable": "MINECRAFT_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:20",
+        "sortOrder": 2
+      },
+      {
+        "name": "Fabric Loader Version",
+        "description": "Fabric loader version or 'latest'.",
+        "envVariable": "FABRIC_LOADER_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:20",
+        "sortOrder": 3
+      },
+      {
+        "name": "Installer Version",
+        "description": "Fabric installer version or 'latest'.",
+        "envVariable": "INSTALLER_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:20",
+        "sortOrder": 4
+      }
+    ]
+  }
+}

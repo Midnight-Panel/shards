@@ -1,0 +1,85 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Terraria (TShock)",
+    "description": "Terraria multiplayer server running TShock for permissions, anti-griefing protection, and plugins.",
+    "author": "Pryaxis & Midnight Team",
+    "version": "5.2.0",
+    "dockerImages": {
+      ".NET 8 / Mono": "ghcr.io/pterodactyl/yolks:dotnet_8",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:dotnet_8",
+    "startupCommand": "./TShock.Server -port {{SERVER_PORT}} -maxplayers {{MAX_PLAYERS}} -world \"/mnt/server/Worlds/{{WORLD_NAME}}.wld\" -autocreate {{WORLD_SIZE}} -worldname \"{{WORLD_NAME}}\" -difficulty {{DIFFICULTY}}",
+    "stopCommand": "exit",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "Server started",
+    "installScript": "#!/bin/bash\n# TShock for Terraria Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq unzip\n\ncd /mnt/server\nmkdir -p Worlds\n\nif [ -z \"${TSHOCK_VERSION}\" ] || [ \"${TSHOCK_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest TShock release from GitHub...\"\n    DOWNLOAD_URL=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r '.assets[] | select(.name | contains(\"linux-x64\")) | .browser_download_url')\nelse\n    DOWNLOAD_URL=\"https://github.com/Pryaxis/TShock/releases/download/${TSHOCK_VERSION}/TShock-${TSHOCK_VERSION}-linux-x64.zip\"\nfi\n\necho \"Downloading TShock from ${DOWNLOAD_URL}...\"\ncurl -o tshock.zip -fSL \"${DOWNLOAD_URL}\"\n\necho \"Extracting TShock...\"\nunzip -q -o tshock.zip\nrm -f tshock.zip\n\nchmod +x TShock.Server\necho \"TShock installation completed!\"\n",
+    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "World Name",
+        "description": "Name of the Terraria world file.",
+        "envVariable": "WORLD_NAME",
+        "defaultValue": "MidnightWorld",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 1
+      },
+      {
+        "name": "Max Players",
+        "description": "Max server players.",
+        "envVariable": "MAX_PLAYERS",
+        "defaultValue": "16",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer|min:1|max:255",
+        "sortOrder": 2
+      },
+      {
+        "name": "World Size",
+        "description": "Auto-creation world size: 1 (Small), 2 (Medium), 3 (Large).",
+        "envVariable": "WORLD_SIZE",
+        "defaultValue": "2",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer|between:1,3",
+        "sortOrder": 3
+      },
+      {
+        "name": "Difficulty",
+        "description": "Difficulty: 0 (Classic), 1 (Expert), 2 (Master), 3 (Journey).",
+        "envVariable": "DIFFICULTY",
+        "defaultValue": "1",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer|between:0,3",
+        "sortOrder": 4
+      },
+      {
+        "name": "TShock Version",
+        "description": "TShock release version or 'latest'.",
+        "envVariable": "TSHOCK_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 5
+      }
+    ]
+  }
+}

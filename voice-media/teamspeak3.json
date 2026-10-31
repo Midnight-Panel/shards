@@ -1,0 +1,75 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Voice & Media",
+    "description": "Voice communication, audio streaming nodes and media servers",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "TeamSpeak 3",
+    "description": "High-performance, low-latency crystal-clear voice communication server for online communities.",
+    "author": "TeamSpeak Systems & Midnight Team",
+    "version": "3.13.7",
+    "dockerImages": {
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian",
+      "Ubuntu 24.04": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:debian",
+    "startupCommand": "./ts3server default_voice_port={{SERVER_PORT}} query_port={{QUERY_PORT}} filetransfer_port={{FILE_PORT}} {{ADDITIONAL_ARGS}}",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "VirtualServerBase: Start",
+    "installScript": "#!/bin/bash\n# TeamSpeak 3 Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl bzip2 tar ca-certificates\n\ncd /mnt/server\n\nif [ -z \"${TS3_VERSION}\" ] || [ \"${TS3_VERSION}\" == \"latest\" ]; then\n    TS3_VERSION=\"3.13.7\"\nfi\n\nDOWNLOAD_URL=\"https://files.teamspeak-services.com/releases/server/${TS3_VERSION}/teamspeak3-server_linux_amd64-${TS3_VERSION}.tar.bz2\"\necho \"Downloading TeamSpeak 3 Server from ${DOWNLOAD_URL}...\"\ncurl -o ts3server.tar.bz2 -fSL \"${DOWNLOAD_URL}\"\n\necho \"Extracting TeamSpeak 3...\"\ntar -xjf ts3server.tar.bz2 --strip-components=1\nrm -f ts3server.tar.bz2\n\ntouch .ts3server_license_accepted\nchmod +x ts3server\n\necho \"TeamSpeak 3 installation completed!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": true,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Query Port",
+        "description": "Port used by ServerQuery and administration tools.",
+        "envVariable": "QUERY_PORT",
+        "defaultValue": "10011",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 1
+      },
+      {
+        "name": "File Transfer Port",
+        "description": "Port used for uploading and downloading icons and channel files.",
+        "envVariable": "FILE_PORT",
+        "defaultValue": "30033",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 2
+      },
+      {
+        "name": "TeamSpeak Version",
+        "description": "Version string to install (e.g. 3.13.7).",
+        "envVariable": "TS3_VERSION",
+        "defaultValue": "3.13.7",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 3
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Extra arguments passed to ts3server.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "license_accepted=1",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 4
+      }
+    ]
+  }
+}

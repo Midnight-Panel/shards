@@ -1,0 +1,53 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "7 Days to Die",
+    "description": "7 Days to Die dedicated server for voxel-based zombie survival horror sandbox.",
+    "author": "The Fun Pimps & Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Unity / Steam Linux": "ghcr.io/pterodactyl/games:source",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "startupCommand": "./7DaysToDieServer.x86_64 -logfile 7DaysToDie_Data/output_log.txt -quit -batchmode -nographics -dedicated {{ADDITIONAL_ARGS}}",
+    "stopCommand": "shutdown",
+    "stopSignal": "SIGINT",
+    "configFiles": [
+      {
+        "path": "serverconfig.xml",
+        "parser": "xml",
+        "mappings": {
+          "ServerPort": "{{SERVER_PORT}}"
+        }
+      }
+    ],
+    "startupDone": "GameServer.LogOn successful",
+    "installScript": "#!/bin/bash\n# 7 Days to Die Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing 7 Days to Die (App ID 294420)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 294420 validate +quit\n\ncd /mnt/server\nchmod +x 7DaysToDieServer.x86_64\necho \"7 Days to Die installation completed!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Additional Arguments",
+        "description": "Additional launch arguments passed to 7DaysToDieServer.x86_64.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "-configfile=serverconfig.xml",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 1
+      }
+    ]
+  }
+}

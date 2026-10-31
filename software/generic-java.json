@@ -1,0 +1,77 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Software & Bots",
+    "description": "Application runtimes, Discord bots, APIs and microservices",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Generic Java",
+    "description": "Run any standard executable Java application, Spring Boot microservice, or standalone JAR.",
+    "author": "Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Java 21": "ghcr.io/pterodactyl/yolks:java_21",
+      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
+      "Java 11": "ghcr.io/pterodactyl/yolks:java_11",
+      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{JVM_ARGS}} -jar {{JARFILE}} {{APP_ARGS}}",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "",
+    "installScript": "#!/bin/bash\n# Generic Java Application Installation Script for Midnight Panel\nset -e\napk add --no-cache curl ca-certificates\n\ncd /mnt/server\nif [ ! -z \"${DOWNLOAD_URL}\" ]; then\n    echo \"Downloading JAR from ${DOWNLOAD_URL}...\"\n    curl -o \"${JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\nfi\n\necho \"Installation complete! Please upload your JAR file if not downloaded automatically.\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Executable JAR File",
+        "description": "The name of the JAR file to execute.",
+        "envVariable": "JARFILE",
+        "defaultValue": "app.jar",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      },
+      {
+        "name": "JVM Arguments",
+        "description": "Custom flags passed directly to the java virtual machine (e.g. -Dserver.port={{SERVER_PORT}}).",
+        "envVariable": "JVM_ARGS",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 2
+      },
+      {
+        "name": "Application Arguments",
+        "description": "Arguments passed to the application main method.",
+        "envVariable": "APP_ARGS",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 3
+      },
+      {
+        "name": "Download URL",
+        "description": "Optional direct URL to download the JAR file during creation.",
+        "envVariable": "DOWNLOAD_URL",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 4
+      }
+    ]
+  }
+}

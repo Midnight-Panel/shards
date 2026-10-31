@@ -1,0 +1,29 @@
+{
+  "name": "@midnight-panel/shards",
+  "version": "1.0.0",
+  "description": "Official Shards (game and app templates) repository for Midnight Panel",
+  "type": "module",
+  "scripts": {
+    "test": "node tools/validate.js",
+    "validate": "node tools/validate.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Midnight-Panel/shards.git"
+  },
+  "keywords": [
+    "midnight",
+    "midnight-panel",
+    "shards",
+    "eggs",
+    "game-servers",
+    "docker",
+    "templates"
+  ],
+  "author": "Midnight Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Midnight-Panel/shards/issues"
+  },
+  "homepage": "https://github.com/Midnight-Panel/shards#readme"
+}

@@ -1,0 +1,115 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Rust",
+    "description": "Rust dedicated server with SteamCMD updater, procedural and custom map support, Oxide/uMod compatibility and WebSockets RCON.",
+    "author": "Facepunch Studios & Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Rust Runner": "ghcr.io/pterodactyl/games:rust",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/games:rust",
+    "startupCommand": "./RustDedicated -batchmode +server.port {{SERVER_PORT}} +server.identity \"rust_server\" +server.hostname \"{{SERVER_NAME}}\" +server.level \"{{SERVER_LEVEL}}\" +server.seed {{SERVER_SEED}} +server.worldsize {{SERVER_WORLDSIZE}} +server.maxplayers {{SERVER_MAXPLAYERS}} +rcon.port {{RCON_PORT}} +rcon.password \"{{RCON_PASS}}\" +rcon.web 1 {{ADDITIONAL_ARGS}}",
+    "stopCommand": "quit",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "Server startup complete",
+    "installScript": "#!/bin/bash\n# Rust Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\necho \"Downloading SteamCMD...\"\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Rust Dedicated Server (App ID 258550)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 258550 validate +quit\n\ncd /mnt/server\nchmod +x RustDedicated\necho \"Rust installation completed successfully!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Name",
+        "description": "The title displayed in the Rust server browser.",
+        "envVariable": "SERVER_NAME",
+        "defaultValue": "Midnight Rust Server",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:64",
+        "sortOrder": 1
+      },
+      {
+        "name": "Server Level",
+        "description": "Map type: Procedural Map, Barren, HapisIsland, Custom.",
+        "envVariable": "SERVER_LEVEL",
+        "defaultValue": "Procedural Map",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 2
+      },
+      {
+        "name": "Server Seed",
+        "description": "Seed for map generation.",
+        "envVariable": "SERVER_SEED",
+        "defaultValue": "12345",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer",
+        "sortOrder": 3
+      },
+      {
+        "name": "World Size",
+        "description": "Map size in meters (usually between 1000 and 6000).",
+        "envVariable": "SERVER_WORLDSIZE",
+        "defaultValue": "3500",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer|between:1000,6000",
+        "sortOrder": 4
+      },
+      {
+        "name": "Max Players",
+        "description": "Maximum concurrent players.",
+        "envVariable": "SERVER_MAXPLAYERS",
+        "defaultValue": "50",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer|min:1",
+        "sortOrder": 5
+      },
+      {
+        "name": "RCON Port",
+        "description": "Remote console communication port.",
+        "envVariable": "RCON_PORT",
+        "defaultValue": "28016",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 6
+      },
+      {
+        "name": "RCON Password",
+        "description": "Password used to access remote RCON administration.",
+        "envVariable": "RCON_PASS",
+        "defaultValue": "ChangeMeMidnight",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 7
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Additional server startup command-line arguments.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 8
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Project Zomboid",
+    "description": "Hardcore isometric zombie survival multiplayer dedicated server by The Indie Stone.",
+    "author": "The Indie Stone & Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Java / Linux Runner": "ghcr.io/pterodactyl/games:source",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "startupCommand": "./start-server.sh -servername \"{{SERVER_NAME}}\" -port {{SERVER_PORT}} -adminpassword \"{{ADMIN_PASSWORD}}\"",
+    "stopCommand": "quit",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "*** SERVER STARTED ****",
+    "installScript": "#!/bin/bash\n# Project Zomboid Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Project Zomboid (App ID 380870)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 380870 validate +quit\n\ncd /mnt/server\nchmod +x start-server.sh ProjectZomboid64\necho \"Project Zomboid installation completed!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Name",
+        "description": "Unique world name and profile identifier.",
+        "envVariable": "SERVER_NAME",
+        "defaultValue": "servertest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 1
+      },
+      {
+        "name": "Admin Password",
+        "description": "Password set for the 'admin' account upon server initialization.",
+        "envVariable": "ADMIN_PASSWORD",
+        "defaultValue": "MidnightAdminPassword",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 2
+      }
+    ]
+  }
+}

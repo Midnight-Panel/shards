@@ -1,0 +1,85 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Valheim",
+    "description": "Viking survival and exploration multiplayer dedicated server in a procedurally generated purgatory inspired by Norse mythology.",
+    "author": "Iron Gate Studio & Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Valheim / Unity Linux": "ghcr.io/pterodactyl/games:source",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "startupCommand": "./valheim_server.x86_64 -name \"{{SERVER_NAME}}\" -port {{SERVER_PORT}} -world \"{{WORLD_NAME}}\" -password \"{{SERVER_PASS}}\" -public {{PUBLIC}} {{ADDITIONAL_ARGS}}",
+    "stopCommand": "",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "Game server connected",
+    "installScript": "#!/bin/bash\n# Valheim Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Valheim Dedicated Server (App ID 896660)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 896660 validate +quit\n\ncd /mnt/server\nchmod +x valheim_server.x86_64\necho \"Valheim installation complete!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Name",
+        "description": "Name shown in the server browser.",
+        "envVariable": "SERVER_NAME",
+        "defaultValue": "Midnight Valheim World",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:64",
+        "sortOrder": 1
+      },
+      {
+        "name": "World Name",
+        "description": "Name of the save file and world seed.",
+        "envVariable": "WORLD_NAME",
+        "defaultValue": "Dedicated",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 2
+      },
+      {
+        "name": "Server Password",
+        "description": "Password required for players to join (minimum 5 characters).",
+        "envVariable": "SERVER_PASS",
+        "defaultValue": "secret123",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string|min:5",
+        "sortOrder": 3
+      },
+      {
+        "name": "Public Listing",
+        "description": "Set to 1 to show in the community browser, or 0 for direct IP connect only.",
+        "envVariable": "PUBLIC",
+        "defaultValue": "1",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer",
+        "sortOrder": 4
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Extra arguments for valheim_server.x86_64.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 5
+      }
+    ]
+  }
+}

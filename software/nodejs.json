@@ -1,0 +1,96 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Software & Bots",
+    "description": "Application runtimes, Discord bots, APIs and microservices",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Node.js",
+    "description": "General-purpose Node.js environment supporting Git auto-pull, npm dependency installation, and JavaScript/TypeScript Discord bots and web services.",
+    "author": "Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Node.js 22": "ghcr.io/pterodactyl/yolks:nodejs_22",
+      "Node.js 20 (LTS)": "ghcr.io/pterodactyl/yolks:nodejs_20",
+      "Node.js 18": "ghcr.io/pterodactyl/yolks:nodejs_18"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:nodejs_20",
+    "startupCommand": "if [[ -d .git ]] && [[ \"{{GIT_AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; if [[ ! -d node_modules ]] || [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; then npm install --production=false; fi; node {{MAIN_FILE}} {{ADDITIONAL_ARGS}}",
+    "stopCommand": "",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "",
+    "installScript": "#!/bin/bash\n# Node.js Application Installation Script for Midnight Panel\nset -e\napk add --no-cache git curl ca-certificates\n\ncd /mnt/server\n\nif [ ! -z \"${GIT_ADDRESS}\" ]; then\n    echo \"Cloning git repository: ${GIT_ADDRESS}...\"\n    if [ -z \"${GIT_BRANCH}\" ]; then\n        GIT_BRANCH=\"main\"\n    fi\n    git clone -b ${GIT_BRANCH} ${GIT_ADDRESS} .\nfi\n\nif [ -f \"package.json\" ]; then\n    echo \"Found package.json, installing dependencies...\"\n    npm install --production=false\nfi\n\necho \"Node.js application installation completed!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Main Executable File",
+        "description": "The entrypoint JavaScript file to run with Node (e.g. index.js, app.js, bot.js, dist/index.js).",
+        "envVariable": "MAIN_FILE",
+        "defaultValue": "index.js",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      },
+      {
+        "name": "Auto Update Dependencies",
+        "description": "Automatically run 'npm install' every time the server starts up (1 = yes, 0 = no).",
+        "envVariable": "AUTO_UPDATE",
+        "defaultValue": "0",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|boolean",
+        "sortOrder": 2
+      },
+      {
+        "name": "Git Auto Pull",
+        "description": "Automatically run 'git pull' on server boot if a git repo is initialized (1 = yes, 0 = no).",
+        "envVariable": "GIT_AUTO_UPDATE",
+        "defaultValue": "0",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|boolean",
+        "sortOrder": 3
+      },
+      {
+        "name": "Git Clone Address",
+        "description": "Optional Git repository URL to clone upon server creation (e.g. https://github.com/user/mybot.git).",
+        "envVariable": "GIT_ADDRESS",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 4
+      },
+      {
+        "name": "Git Branch",
+        "description": "Target git branch for cloning.",
+        "envVariable": "GIT_BRANCH",
+        "defaultValue": "main",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 5
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Extra arguments appended to the node command.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 6
+      }
+    ]
+  }
+}

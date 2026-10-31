@@ -1,0 +1,75 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Databases",
+    "description": "In-memory caches, relational SQL engines and key-value datastores",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "MariaDB",
+    "description": "High-performance community-developed relational database management system, compatible drop-in replacement for MySQL.",
+    "author": "MariaDB Foundation & Midnight Team",
+    "version": "11.4",
+    "dockerImages": {
+      "MariaDB 11.4 (LTS)": "mariadb:11.4",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "mariadb:11.4",
+    "startupCommand": "mysqld --port={{SERVER_PORT}} --datadir=/home/container/mysql --bind-address=0.0.0.0 --socket=/home/container/mysql.sock",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "ready for connections",
+    "installScript": "#!/bin/bash\n# MariaDB Installation Script for Midnight Panel\nset -e\napt update && apt install -y mariadb-server\n\ncd /mnt/server\nmkdir -p /mnt/server/mysql\n\necho \"Initializing database cluster...\"\nmariadb-install-db --user=container --datadir=/mnt/server/mysql\n\necho \"MariaDB installation complete!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Default Database Name",
+        "description": "The name of the database created on initial setup.",
+        "envVariable": "MYSQL_DATABASE",
+        "defaultValue": "midnight",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 1
+      },
+      {
+        "name": "Database User",
+        "description": "Standard user created with grants to the default database.",
+        "envVariable": "MYSQL_USER",
+        "defaultValue": "midnight_user",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 2
+      },
+      {
+        "name": "Database User Password",
+        "description": "Password for the database user.",
+        "envVariable": "MYSQL_PASSWORD",
+        "defaultValue": "secret123",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string|min:6",
+        "sortOrder": 3
+      },
+      {
+        "name": "Root Password",
+        "description": "Password for the administrative 'root' account.",
+        "envVariable": "MYSQL_ROOT_PASSWORD",
+        "defaultValue": "RootAdminPassword123",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string|min:8",
+        "sortOrder": 4
+      }
+    ]
+  }
+}

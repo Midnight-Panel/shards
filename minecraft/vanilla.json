@@ -1,0 +1,66 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Minecraft",
+    "description": "Minecraft game servers, modded runtimes and network proxies",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Vanilla Minecraft",
+    "description": "The official Minecraft server software directly provided and maintained by Mojang Studios.",
+    "author": "Mojang Studios & Midnight Team",
+    "version": "1.21.4",
+    "dockerImages": {
+      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
+      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
+      "Java 11": "ghcr.io/pterodactyl/yolks:java_11",
+      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}} nogui",
+    "stopCommand": "stop",
+    "stopSignal": "SIGTERM",
+    "configFiles": [
+      {
+        "path": "server.properties",
+        "parser": "properties",
+        "mappings": {
+          "server-port": "{{SERVER_PORT}}",
+          "server-ip": "{{SERVER_IP}}"
+        }
+      }
+    ],
+    "startupDone": ") Done (",
+    "installScript": "#!/bin/bash\n# Vanilla Minecraft Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\necho \"Fetching Mojang version manifest...\"\nMANIFEST_URL=\"https://piston-meta.mojang.com/mc/game/version_manifest_v2.json\"\n\nif [ -z \"${MINECRAFT_VERSION}\" ] || [ \"${MINECRAFT_VERSION}\" == \"latest\" ]; then\n    MINECRAFT_VERSION=$(curl -s \"${MANIFEST_URL}\" | jq -r '.latest.release')\nfi\n\necho \"Target version: ${MINECRAFT_VERSION}\"\nVERSION_URL=$(curl -s \"${MANIFEST_URL}\" | jq -r --arg v \"${MINECRAFT_VERSION}\" '.versions[] | select(.id == $v) | .url')\n\nif [ -z \"${VERSION_URL}\" ] || [ \"${VERSION_URL}\" == \"null\" ]; then\n    echo \"Error: Could not find version ${MINECRAFT_VERSION} in Mojang manifest.\"\n    exit 1\nfi\n\necho \"Resolving server jar package...\"\nSERVER_DOWNLOAD_URL=$(curl -s \"${VERSION_URL}\" | jq -r '.downloads.server.url')\n\necho \"Downloading vanilla server jar from ${SERVER_DOWNLOAD_URL}...\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${SERVER_DOWNLOAD_URL}\"\n\necho \"Writing eula.txt...\"\necho \"eula=true\" > eula.txt\n\necho \"Vanilla Minecraft installation completed!\"\n",
+    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": true,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Jar File",
+        "description": "The name of the executable jar file to run the Vanilla server.",
+        "envVariable": "SERVER_JARFILE",
+        "defaultValue": "server.jar",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:40",
+        "sortOrder": 1
+      },
+      {
+        "name": "Minecraft Version",
+        "description": "The Minecraft version to install, e.g. 1.21.4, 1.20.4, or 'latest'.",
+        "envVariable": "MINECRAFT_VERSION",
+        "defaultValue": "latest",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:20",
+        "sortOrder": 2
+      }
+    ]
+  }
+}

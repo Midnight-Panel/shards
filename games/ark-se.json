@@ -1,0 +1,105 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Game Servers",
+    "description": "Multiplayer dedicated game servers powered by SteamCMD and native game engines",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "ARK: Survival Evolved",
+    "description": "ARK: Survival Evolved dedicated Linux server with customizable maps, player limits, and full mod support.",
+    "author": "Studio Wildcard & Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Source / Unreal Linux": "ghcr.io/pterodactyl/games:source",
+      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "startupCommand": "./ShooterGame/Binaries/Linux/ShooterGameServer {{MAP_NAME}}?listen?SessionName={{SESSION_NAME}}?ServerPassword={{SERVER_PASSWORD}}?ServerAdminPassword={{ADMIN_PASSWORD}}?Port={{SERVER_PORT}}?QueryPort={{QUERY_PORT}}?MaxPlayers={{MAX_PLAYERS}} {{ADDITIONAL_ARGS}} -server -log",
+    "stopCommand": "doexit",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "Server: \"ShooterGameServer\" has successfully started!",
+    "installScript": "#!/bin/bash\n# ARK: Survival Evolved Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing ARK: Survival Evolved (App ID 376030)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 376030 validate +quit\n\ncd /mnt/server\nchmod +x ShooterGame/Binaries/Linux/ShooterGameServer\necho \"ARK installation completed!\"\n",
+    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Map Name",
+        "description": "Map to load (TheIsland, ScorchedEarth_P, Ragnarok, Aberration_P, Extinction, Valguero_P, Genesis, CrystalIsles).",
+        "envVariable": "MAP_NAME",
+        "defaultValue": "TheIsland",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      },
+      {
+        "name": "Session Name",
+        "description": "Server title in the public lobby.",
+        "envVariable": "SESSION_NAME",
+        "defaultValue": "Midnight ARK Server",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:64",
+        "sortOrder": 2
+      },
+      {
+        "name": "Server Password",
+        "description": "Password to enter server (leave empty for public).",
+        "envVariable": "SERVER_PASSWORD",
+        "defaultValue": "",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 3
+      },
+      {
+        "name": "Admin Password",
+        "description": "Password to access admin console commands.",
+        "envVariable": "ADMIN_PASSWORD",
+        "defaultValue": "MidnightAdminPassword",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 4
+      },
+      {
+        "name": "Query Port",
+        "description": "Steam browser discovery query port.",
+        "envVariable": "QUERY_PORT",
+        "defaultValue": "27015",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 5
+      },
+      {
+        "name": "Max Players",
+        "description": "Max simultaneous player count.",
+        "envVariable": "MAX_PLAYERS",
+        "defaultValue": "70",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|integer|min:1|max:128",
+        "sortOrder": 6
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Extra flags (e.g. -NoBattlEye -automanagedmods -UseVivox).",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "-NoBattlEye",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 7
+      }
+    ]
+  }
+}

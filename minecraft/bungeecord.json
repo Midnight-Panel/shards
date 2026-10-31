@@ -1,0 +1,54 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Minecraft",
+    "description": "Minecraft game servers, modded runtimes and network proxies",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "BungeeCord",
+    "description": "The classic, widely-adopted proxy server linking multiple Minecraft instances together seamlessly.",
+    "author": "SpigotMC & Midnight Team",
+    "version": "1.21",
+    "dockerImages": {
+      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
+      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
+      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+    },
+    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
+    "stopCommand": "end",
+    "stopSignal": "SIGTERM",
+    "configFiles": [
+      {
+        "path": "config.yml",
+        "parser": "yaml",
+        "mappings": {
+          "listeners.0.host": "0.0.0.0:{{SERVER_PORT}}"
+        }
+      }
+    ],
+    "startupDone": "Listening on /",
+    "installScript": "#!/bin/bash\n# BungeeCord Installation Script for Midnight Panel\nset -e\napk add --no-cache curl\n\ncd /mnt/server\n\necho \"Downloading latest BungeeCord build from SpigotMC CI...\"\nDOWNLOAD_URL=\"https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\n\necho \"BungeeCord installation complete!\"\n",
+    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Jar File",
+        "description": "The name of the executable jar file to run BungeeCord.",
+        "envVariable": "SERVER_JARFILE",
+        "defaultValue": "BungeeCord.jar",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:40",
+        "sortOrder": 1
+      }
+    ]
+  }
+}
