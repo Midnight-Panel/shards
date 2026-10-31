@@ -12,10 +12,11 @@
     "author": "The Fun Pimps & Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Unity / Steam Linux": "ghcr.io/pterodactyl/games:source",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight 7D2D Dedicated": "ghcr.io/midnight-panel/games:source",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./7DaysToDieServer.x86_64 -logfile 7DaysToDie_Data/output_log.txt -quit -batchmode -nographics -dedicated {{ADDITIONAL_ARGS}}",
     "stopCommand": "shutdown",
     "stopSignal": "SIGINT",
@@ -30,7 +31,7 @@
     ],
     "startupDone": "GameServer.LogOn successful",
     "installScript": "#!/bin/bash\n# 7 Days to Die Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing 7 Days to Die (App ID 294420)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 294420 validate +quit\n\ncd /mnt/server\nchmod +x 7DaysToDieServer.x86_64\necho \"7 Days to Die installation completed!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

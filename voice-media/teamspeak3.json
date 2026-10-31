@@ -12,17 +12,17 @@
     "author": "TeamSpeak Systems & Midnight Team",
     "version": "3.13.7",
     "dockerImages": {
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian",
-      "Ubuntu 24.04": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Debian (Fallback)": "ghcr.io/pterodactyl/yolks:debian"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:debian",
+    "defaultDockerImage": "ghcr.io/midnight-panel/base:debian",
     "startupCommand": "./ts3server default_voice_port={{SERVER_PORT}} query_port={{QUERY_PORT}} filetransfer_port={{FILE_PORT}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGTERM",
     "configFiles": [],
     "startupDone": "VirtualServerBase: Start",
     "installScript": "#!/bin/bash\n# TeamSpeak 3 Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl bzip2 tar ca-certificates\n\ncd /mnt/server\n\nif [ -z \"${TS3_VERSION}\" ] || [ \"${TS3_VERSION}\" == \"latest\" ]; then\n    TS3_VERSION=\"3.13.7\"\nfi\n\nDOWNLOAD_URL=\"https://files.teamspeak-services.com/releases/server/${TS3_VERSION}/teamspeak3-server_linux_amd64-${TS3_VERSION}.tar.bz2\"\necho \"Downloading TeamSpeak 3 Server from ${DOWNLOAD_URL}...\"\ncurl -o ts3server.tar.bz2 -fSL \"${DOWNLOAD_URL}\"\n\necho \"Extracting TeamSpeak 3...\"\ntar -xjf ts3server.tar.bz2 --strip-components=1\nrm -f ts3server.tar.bz2\n\ntouch .ts3server_license_accepted\nchmod +x ts3server\n\necho \"TeamSpeak 3 installation completed!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": true,

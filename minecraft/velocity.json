@@ -12,10 +12,11 @@
     "author": "PaperMC & Midnight Team",
     "version": "3.3.0",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
     "stopCommand": "end",
     "stopSignal": "SIGTERM",
@@ -30,7 +31,7 @@
     ],
     "startupDone": "Done (",
     "installScript": "#!/bin/bash\n# Velocity Proxy Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\nif [ -z \"${VELOCITY_VERSION}\" ] || [ \"${VELOCITY_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Velocity version...\"\n    VELOCITY_VERSION=$(curl -s https://api.papermc.io/v2/projects/velocity | jq -r '.versions[-1]')\nfi\n\necho \"Target Velocity version: ${VELOCITY_VERSION}\"\n\nif [ -z \"${BUILD_NUMBER}\" ] || [ \"${BUILD_NUMBER}\" == \"latest\" ]; then\n    echo \"Resolving latest build number for ${VELOCITY_VERSION}...\"\n    BUILD_NUMBER=$(curl -s https://api.papermc.io/v2/projects/velocity/versions/${VELOCITY_VERSION}/builds | jq -r '.builds[-1].build')\nfi\n\necho \"Target build: ${BUILD_NUMBER}\"\nJAR_NAME=\"velocity-${VELOCITY_VERSION}-${BUILD_NUMBER}.jar\"\nDOWNLOAD_URL=\"https://api.papermc.io/v2/projects/velocity/versions/${VELOCITY_VERSION}/builds/${BUILD_NUMBER}/downloads/${JAR_NAME}\"\n\necho \"Downloading Velocity from ${DOWNLOAD_URL}...\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\n\necho \"Velocity installation complete!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

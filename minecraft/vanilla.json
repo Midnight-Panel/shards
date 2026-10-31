@@ -12,12 +12,13 @@
     "author": "Mojang Studios & Midnight Team",
     "version": "1.21.4",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
-      "Java 11": "ghcr.io/pterodactyl/yolks:java_11",
-      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Midnight Java 11": "ghcr.io/midnight-panel/java:11",
+      "Midnight Java 8": "ghcr.io/midnight-panel/java:8",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}} nogui",
     "stopCommand": "stop",
     "stopSignal": "SIGTERM",
@@ -33,7 +34,7 @@
     ],
     "startupDone": ") Done (",
     "installScript": "#!/bin/bash\n# Vanilla Minecraft Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\necho \"Fetching Mojang version manifest...\"\nMANIFEST_URL=\"https://piston-meta.mojang.com/mc/game/version_manifest_v2.json\"\n\nif [ -z \"${MINECRAFT_VERSION}\" ] || [ \"${MINECRAFT_VERSION}\" == \"latest\" ]; then\n    MINECRAFT_VERSION=$(curl -s \"${MANIFEST_URL}\" | jq -r '.latest.release')\nfi\n\necho \"Target version: ${MINECRAFT_VERSION}\"\nVERSION_URL=$(curl -s \"${MANIFEST_URL}\" | jq -r --arg v \"${MINECRAFT_VERSION}\" '.versions[] | select(.id == $v) | .url')\n\nif [ -z \"${VERSION_URL}\" ] || [ \"${VERSION_URL}\" == \"null\" ]; then\n    echo \"Error: Could not find version ${MINECRAFT_VERSION} in Mojang manifest.\"\n    exit 1\nfi\n\necho \"Resolving server jar package...\"\nSERVER_DOWNLOAD_URL=$(curl -s \"${VERSION_URL}\" | jq -r '.downloads.server.url')\n\necho \"Downloading vanilla server jar from ${SERVER_DOWNLOAD_URL}...\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${SERVER_DOWNLOAD_URL}\"\n\necho \"Writing eula.txt...\"\necho \"eula=true\" > eula.txt\n\necho \"Vanilla Minecraft installation completed!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": true,

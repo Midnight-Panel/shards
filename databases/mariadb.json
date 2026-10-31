@@ -12,8 +12,8 @@
     "author": "MariaDB Foundation & Midnight Team",
     "version": "11.4",
     "dockerImages": {
-      "MariaDB 11.4 (LTS)": "mariadb:11.4",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "MariaDB 11.4 (Official LTS)": "mariadb:11.4",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "mariadb:11.4",
     "startupCommand": "mysqld --port={{SERVER_PORT}} --datadir=/home/container/mysql --bind-address=0.0.0.0 --socket=/home/container/mysql.sock",
@@ -22,7 +22,7 @@
     "configFiles": [],
     "startupDone": "ready for connections",
     "installScript": "#!/bin/bash\n# MariaDB Installation Script for Midnight Panel\nset -e\napt update && apt install -y mariadb-server\n\ncd /mnt/server\nmkdir -p /mnt/server/mysql\n\necho \"Initializing database cluster...\"\nmariadb-install-db --user=container --datadir=/mnt/server/mysql\n\necho \"MariaDB installation complete!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

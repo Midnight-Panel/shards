@@ -12,18 +12,19 @@
     "author": "Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Python 3.12 (Latest)": "ghcr.io/pterodactyl/yolks:python_3.12",
-      "Python 3.11": "ghcr.io/pterodactyl/yolks:python_3.11",
-      "Python 3.10": "ghcr.io/pterodactyl/yolks:python_3.10"
+      "Midnight Python 3.12 (Latest)": "ghcr.io/midnight-panel/python:3.12",
+      "Midnight Python 3.11": "ghcr.io/midnight-panel/python:3.11",
+      "Midnight Python 3.10": "ghcr.io/midnight-panel/python:3.10",
+      "Yolks Python 3.12 (Fallback)": "ghcr.io/pterodactyl/yolks:python_3.12"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:python_3.12",
+    "defaultDockerImage": "ghcr.io/midnight-panel/python:3.12",
     "startupCommand": "if [[ -d .git ]] && [[ \"{{GIT_AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; if [[ -f requirements.txt ]] && [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; then pip install --no-cache-dir -r requirements.txt; fi; python3 {{MAIN_FILE}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "",
     "installScript": "#!/bin/bash\n# Python Application Installation Script for Midnight Panel\nset -e\napk add --no-cache git curl ca-certificates build-base\n\ncd /mnt/server\n\nif [ ! -z \"${GIT_ADDRESS}\" ]; then\n    echo \"Cloning git repository: ${GIT_ADDRESS}...\"\n    if [ -z \"${GIT_BRANCH}\" ]; then\n        GIT_BRANCH=\"main\"\n    fi\n    git clone -b ${GIT_BRANCH} ${GIT_ADDRESS} .\nfi\n\nif [ -f \"requirements.txt\" ]; then\n    echo \"Found requirements.txt, installing Python packages...\"\n    pip install --no-cache-dir -r requirements.txt\nfi\n\necho \"Python application installation completed!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

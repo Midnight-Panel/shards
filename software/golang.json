@@ -12,18 +12,18 @@
     "author": "Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Go 1.23 (Latest)": "ghcr.io/pterodactyl/yolks:go_1.23",
-      "Go 1.22": "ghcr.io/pterodactyl/yolks:go_1.22",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Go 1.23 (Latest)": "ghcr.io/midnight-panel/golang:1.23",
+      "Midnight Go 1.22": "ghcr.io/midnight-panel/golang:1.22",
+      "Yolks Go 1.23 (Fallback)": "ghcr.io/pterodactyl/yolks:go_1.23"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:go_1.23",
+    "defaultDockerImage": "ghcr.io/midnight-panel/golang:1.23",
     "startupCommand": "./{{EXECUTABLE}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "",
     "installScript": "#!/bin/bash\n# Go Application Installation Script for Midnight Panel\nset -e\napk add --no-cache git curl ca-certificates go\n\ncd /mnt/server\n\nif [ ! -z \"${GIT_ADDRESS}\" ]; then\n    echo \"Cloning git repository: ${GIT_ADDRESS}...\"\n    if [ -z \"${GIT_BRANCH}\" ]; then\n        GIT_BRANCH=\"main\"\n    fi\n    git clone -b ${GIT_BRANCH} ${GIT_ADDRESS} .\n    if [ -f \"go.mod\" ]; then\n        echo \"Compiling Go application...\"\n        go build -o \"${EXECUTABLE}\"\n    fi\nfi\n\nif [ -f \"${EXECUTABLE}\" ]; then\n    chmod +x \"${EXECUTABLE}\"\nfi\n\necho \"Golang installation completed!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

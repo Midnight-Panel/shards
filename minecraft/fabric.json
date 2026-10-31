@@ -12,11 +12,12 @@
     "author": "FabricMC & Midnight Team",
     "version": "1.21.4",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
-      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Midnight Java 8": "ghcr.io/midnight-panel/java:8",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}} nogui",
     "stopCommand": "stop",
     "stopSignal": "SIGTERM",
@@ -32,7 +33,7 @@
     ],
     "startupDone": ") Done (",
     "installScript": "#!/bin/bash\n# Fabric Server Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\nif [ -z \"${MINECRAFT_VERSION}\" ] || [ \"${MINECRAFT_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Minecraft game version...\"\n    MINECRAFT_VERSION=$(curl -s https://meta.fabricmc.net/v2/versions/game | jq -r '.[0].version')\nfi\n\nif [ -z \"${FABRIC_LOADER_VERSION}\" ] || [ \"${FABRIC_LOADER_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Fabric loader version...\"\n    FABRIC_LOADER_VERSION=$(curl -s https://meta.fabricmc.net/v2/versions/loader | jq -r '.[0].version')\nfi\n\nif [ -z \"${INSTALLER_VERSION}\" ] || [ \"${INSTALLER_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Fabric installer version...\"\n    INSTALLER_VERSION=$(curl -s https://meta.fabricmc.net/v2/versions/installer | jq -r '.[0].version')\nfi\n\necho \"Installing Fabric (Minecraft: ${MINECRAFT_VERSION}, Loader: ${FABRIC_LOADER_VERSION}, Installer: ${INSTALLER_VERSION})...\"\n\nDOWNLOAD_URL=\"https://meta.fabricmc.net/v2/versions/loader/${MINECRAFT_VERSION}/${FABRIC_LOADER_VERSION}/${INSTALLER_VERSION}/server/jar\"\necho \"Downloading prebuilt server jar from ${DOWNLOAD_URL}...\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\n\necho \"Writing eula.txt...\"\necho \"eula=true\" > eula.txt\n\necho \"Fabric installation complete!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": true,

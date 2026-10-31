@@ -12,17 +12,18 @@
     "author": "Valve & Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Source 1 Linux": "ghcr.io/pterodactyl/games:source",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Source Dedicated": "ghcr.io/midnight-panel/games:source",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./srcds_run -game tf -console +ip 0.0.0.0 +port {{SERVER_PORT}} +map {{START_MAP}} +maxplayers {{MAX_PLAYERS}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "quit",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "VAC secure mode is activated.",
     "installScript": "#!/bin/bash\n# Team Fortress 2 Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Team Fortress 2 (App ID 232250)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 232250 validate +quit\n\ncd /mnt/server\nchmod +x srcds_run srcds_linux\necho \"Team Fortress 2 installation completed!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

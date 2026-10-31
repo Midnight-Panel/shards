@@ -12,8 +12,8 @@
     "author": "Redis Ltd. & Midnight Team",
     "version": "7.4",
     "dockerImages": {
-      "Redis 7 (Alpine)": "redis:7-alpine",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Redis 7 (Official Alpine)": "redis:7-alpine",
+      "Midnight Alpine Base": "ghcr.io/midnight-panel/base:alpine"
     },
     "defaultDockerImage": "redis:7-alpine",
     "startupCommand": "redis-server --port {{SERVER_PORT}} --bind 0.0.0.0 --requirepass \"{{REDIS_PASSWORD}}\" --maxmemory {{SERVER_MEMORY}}mb --maxmemory-policy allkeys-lru --dir /home/container/data",
@@ -22,7 +22,7 @@
     "configFiles": [],
     "startupDone": "Ready to accept connections",
     "installScript": "#!/bin/sh\n# Redis Installation Script for Midnight Panel\nset -e\nmkdir -p /mnt/server/data\necho \"Redis setup complete!\"\n",
-    "installImage": "alpine:latest",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/sh",
     "features": {
       "eula": false,

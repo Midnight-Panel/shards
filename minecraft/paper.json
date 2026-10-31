@@ -12,12 +12,13 @@
     "author": "PaperMC & Midnight Team",
     "version": "1.21.4",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
-      "Java 11": "ghcr.io/pterodactyl/yolks:java_11",
-      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Midnight Java 11": "ghcr.io/midnight-panel/java:11",
+      "Midnight Java 8": "ghcr.io/midnight-panel/java:8",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
     "stopCommand": "stop",
     "stopSignal": "SIGTERM",
@@ -33,7 +34,7 @@
     ],
     "startupDone": ") Done (",
     "installScript": "#!/bin/bash\n# PaperMC Server Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\nif [ -z \"${MINECRAFT_VERSION}\" ] || [ \"${MINECRAFT_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest PaperMC version...\"\n    MINECRAFT_VERSION=$(curl -s https://api.papermc.io/v2/projects/paper | jq -r '.versions[-1]')\nfi\n\necho \"Target Minecraft version: ${MINECRAFT_VERSION}\"\n\nif [ -z \"${BUILD_NUMBER}\" ] || [ \"${BUILD_NUMBER}\" == \"latest\" ]; then\n    echo \"Resolving latest build number for ${MINECRAFT_VERSION}...\"\n    BUILD_NUMBER=$(curl -s https://api.papermc.io/v2/projects/paper/versions/${MINECRAFT_VERSION}/builds | jq -r '.builds | map(select(.channel == \"default\")) | .[-1].build')\nfi\n\necho \"Target build number: ${BUILD_NUMBER}\"\nJAR_NAME=\"paper-${MINECRAFT_VERSION}-${BUILD_NUMBER}.jar\"\nDOWNLOAD_URL=\"https://api.papermc.io/v2/projects/paper/versions/${MINECRAFT_VERSION}/builds/${BUILD_NUMBER}/downloads/${JAR_NAME}\"\n\necho \"Downloading PaperMC from ${DOWNLOAD_URL}...\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\n\necho \"Writing eula.txt...\"\necho \"eula=true\" > eula.txt\n\necho \"Paper installation completed successfully!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": true,

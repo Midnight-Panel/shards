@@ -12,17 +12,18 @@
     "author": "Iron Gate Studio & Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Valheim / Unity Linux": "ghcr.io/pterodactyl/games:source",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Valheim Dedicated": "ghcr.io/midnight-panel/games:source",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./valheim_server.x86_64 -name \"{{SERVER_NAME}}\" -port {{SERVER_PORT}} -world \"{{WORLD_NAME}}\" -password \"{{SERVER_PASS}}\" -public {{PUBLIC}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "Game server connected",
     "installScript": "#!/bin/bash\n# Valheim Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Valheim Dedicated Server (App ID 896660)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 896660 validate +quit\n\ncd /mnt/server\nchmod +x valheim_server.x86_64\necho \"Valheim installation complete!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

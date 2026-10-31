@@ -12,17 +12,17 @@
     "author": "Pryaxis & Midnight Team",
     "version": "5.2.0",
     "dockerImages": {
-      ".NET 8 / Mono": "ghcr.io/pterodactyl/yolks:dotnet_8",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks .NET 8 (Fallback)": "ghcr.io/pterodactyl/yolks:dotnet_8"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:dotnet_8",
+    "defaultDockerImage": "ghcr.io/midnight-panel/base:debian",
     "startupCommand": "./TShock.Server -port {{SERVER_PORT}} -maxplayers {{MAX_PLAYERS}} -world \"/mnt/server/Worlds/{{WORLD_NAME}}.wld\" -autocreate {{WORLD_SIZE}} -worldname \"{{WORLD_NAME}}\" -difficulty {{DIFFICULTY}}",
     "stopCommand": "exit",
     "stopSignal": "SIGTERM",
     "configFiles": [],
     "startupDone": "Server started",
     "installScript": "#!/bin/bash\n# TShock for Terraria Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq unzip\n\ncd /mnt/server\nmkdir -p Worlds\n\nif [ -z \"${TSHOCK_VERSION}\" ] || [ \"${TSHOCK_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest TShock release from GitHub...\"\n    DOWNLOAD_URL=$(curl -s https://api.github.com/repos/Pryaxis/TShock/releases/latest | jq -r '.assets[] | select(.name | contains(\"linux-x64\")) | .browser_download_url')\nelse\n    DOWNLOAD_URL=\"https://github.com/Pryaxis/TShock/releases/download/${TSHOCK_VERSION}/TShock-${TSHOCK_VERSION}-linux-x64.zip\"\nfi\n\necho \"Downloading TShock from ${DOWNLOAD_URL}...\"\ncurl -o tshock.zip -fSL \"${DOWNLOAD_URL}\"\n\necho \"Extracting TShock...\"\nunzip -q -o tshock.zip\nrm -f tshock.zip\n\nchmod +x TShock.Server\necho \"TShock installation completed!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

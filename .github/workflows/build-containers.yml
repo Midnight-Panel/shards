@@ -1,0 +1,150 @@
+name: Build and Publish Containers
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "containers/**"
+      - ".github/workflows/build-containers.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    name: ${{ matrix.name }}:${{ matrix.tag }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Java
+          - name: java
+            tag: "21"
+            context: ./containers/java/21
+            latest: true
+          - name: java
+            tag: "17"
+            context: ./containers/java/17
+            latest: false
+          - name: java
+            tag: "11"
+            context: ./containers/java/11
+            latest: false
+          - name: java
+            tag: "8"
+            context: ./containers/java/8
+            latest: false
+
+          # Node.js
+          - name: nodejs
+            tag: "22"
+            context: ./containers/nodejs/22
+            latest: false
+          - name: nodejs
+            tag: "20"
+            context: ./containers/nodejs/20
+            latest: true
+          - name: nodejs
+            tag: "18"
+            context: ./containers/nodejs/18
+            latest: false
+
+          # Python
+          - name: python
+            tag: "3.12"
+            context: ./containers/python/3.12
+            latest: true
+          - name: python
+            tag: "3.11"
+            context: ./containers/python/3.11
+            latest: false
+          - name: python
+            tag: "3.10"
+            context: ./containers/python/3.10
+            latest: false
+
+          # Golang
+          - name: golang
+            tag: "1.23"
+            context: ./containers/golang/1.23
+            latest: true
+          - name: golang
+            tag: "1.22"
+            context: ./containers/golang/1.22
+            latest: false
+
+          # Game Runtimes
+          - name: games
+            tag: "source"
+            context: ./containers/games/source
+            latest: false
+          - name: games
+            tag: "rust"
+            context: ./containers/games/rust
+            latest: false
+          - name: games
+            tag: "bedrock"
+            context: ./containers/games/bedrock
+            latest: false
+
+          # Installers
+          - name: installers
+            tag: "alpine"
+            context: ./containers/installers/alpine
+            latest: true
+          - name: installers
+            tag: "debian"
+            context: ./containers/installers/debian
+            latest: false
+
+          # Base Runtimes
+          - name: base
+            tag: "alpine"
+            context: ./containers/base/alpine
+            latest: false
+          - name: base
+            tag: "debian"
+            context: ./containers/base/debian
+            latest: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Lowercase repository owner
+        run: echo "REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Set up QEMU (Multi-Arch)
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine tags
+        id: tags
+        run: |
+          PRIMARY="ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.name }}:${{ matrix.tag }}"
+          TAGS="${PRIMARY}"
+          if [ "${{ matrix.latest }}" = "true" ]; then
+            TAGS="${TAGS},ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.name }}:latest"
+          fi
+          echo "TAGS=${TAGS}" >> $GITHUB_OUTPUT
+
+      - name: Build and push container image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.context }}/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.tags.outputs.TAGS }}

@@ -12,17 +12,18 @@
     "author": "Pocketpair & Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Palworld Runner": "ghcr.io/pterodactyl/games:source",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Palworld Dedicated": "ghcr.io/midnight-panel/games:source",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./PalServer.sh -port={{SERVER_PORT}} -players={{MAX_PLAYERS}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "Server marked as running...",
     "installScript": "#!/bin/bash\n# Palworld Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Palworld Dedicated Server (App ID 2394010)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 2394010 validate +quit\n\ncd /mnt/server\nchmod +x PalServer.sh\nmkdir -p Pal/Saved/Config/LinuxServer\necho \"Palworld installation complete!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

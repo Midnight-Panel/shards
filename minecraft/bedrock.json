@@ -12,10 +12,11 @@
     "author": "Mojang Studios & Midnight Team",
     "version": "1.21.50",
     "dockerImages": {
-      "Bedrock Linux": "ghcr.io/pterodactyl/games:bedrock",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Bedrock Dedicated": "ghcr.io/midnight-panel/games:bedrock",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Bedrock (Fallback)": "ghcr.io/pterodactyl/games:bedrock"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:bedrock",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:bedrock",
     "startupCommand": "LD_LIBRARY_PATH=. ./bedrock_server",
     "stopCommand": "stop",
     "stopSignal": "SIGINT",
@@ -31,7 +32,7 @@
     ],
     "startupDone": "Server started.",
     "installScript": "#!/bin/bash\n# Bedrock BDS Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl jq unzip ca-certificates\n\ncd /mnt/server\n\nDOWNLOAD_URL=$(curl -s -H \"User-Agent: Mozilla/5.0\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o 'https://www.minecraft.net/bedrockdedicatedserver/bin-linux/[^\"]*' | head -n 1)\n\nif [ -z \"${DOWNLOAD_URL}\" ]; then\n    echo \"Warning: Unable to scrape download link from website, using fallback release endpoint...\"\n    DOWNLOAD_URL=\"https://minecraft.azureedge.net/bin-linux/bedrock-server-1.21.50.07.zip\"\nfi\n\necho \"Downloading Bedrock Dedicated Server from ${DOWNLOAD_URL}...\"\ncurl -H \"User-Agent: Mozilla/5.0\" -fSL -o bedrock-server.zip \"${DOWNLOAD_URL}\"\n\necho \"Extracting files...\"\nunzip -q -o bedrock-server.zip -x server.properties permissions.json allowlist.json\nrm -f bedrock-server.zip\n\nchmod +x bedrock_server\necho \"Bedrock installation complete!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

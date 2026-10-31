@@ -12,10 +12,11 @@
     "author": "freyacodes & Midnight Team",
     "version": "4.0.8",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar Lavalink.jar",
     "stopCommand": "",
     "stopSignal": "SIGTERM",
@@ -30,7 +31,7 @@
     ],
     "startupDone": "Lavalink is ready to accept connections",
     "installScript": "#!/bin/bash\n# Lavalink Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq\n\ncd /mnt/server\n\nif [ -z \"${LAVALINK_VERSION}\" ] || [ \"${LAVALINK_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Lavalink release...\"\n    DOWNLOAD_URL=$(curl -s https://api.github.com/repos/lavalink-devs/Lavalink/releases/latest | jq -r '.assets[] | select(.name == \"Lavalink.jar\") | .browser_download_url')\nelse\n    DOWNLOAD_URL=\"https://github.com/lavalink-devs/Lavalink/releases/download/${LAVALINK_VERSION}/Lavalink.jar\"\nfi\n\necho \"Downloading Lavalink from ${DOWNLOAD_URL}...\"\ncurl -o Lavalink.jar -fSL \"${DOWNLOAD_URL}\"\n\nif [ ! -f \"application.yml\" ]; then\n    echo \"Creating default application.yml...\"\n    curl -o application.yml -fSL \"https://raw.githubusercontent.com/lavalink-devs/Lavalink/master/LavalinkServer/application.yml.example\"\nfi\n\necho \"Lavalink installation complete!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

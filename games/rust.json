@@ -12,17 +12,18 @@
     "author": "Facepunch Studios & Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Rust Runner": "ghcr.io/pterodactyl/games:rust",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Rust Dedicated": "ghcr.io/midnight-panel/games:rust",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Rust (Fallback)": "ghcr.io/pterodactyl/games:rust"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:rust",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:rust",
     "startupCommand": "./RustDedicated -batchmode +server.port {{SERVER_PORT}} +server.identity \"rust_server\" +server.hostname \"{{SERVER_NAME}}\" +server.level \"{{SERVER_LEVEL}}\" +server.seed {{SERVER_SEED}} +server.worldsize {{SERVER_WORLDSIZE}} +server.maxplayers {{SERVER_MAXPLAYERS}} +rcon.port {{RCON_PORT}} +rcon.password \"{{RCON_PASS}}\" +rcon.web 1 {{ADDITIONAL_ARGS}}",
     "stopCommand": "quit",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "Server startup complete",
     "installScript": "#!/bin/bash\n# Rust Dedicated Server Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\necho \"Downloading SteamCMD...\"\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing Rust Dedicated Server (App ID 258550)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 258550 validate +quit\n\ncd /mnt/server\nchmod +x RustDedicated\necho \"Rust installation completed successfully!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

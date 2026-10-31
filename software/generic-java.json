@@ -12,19 +12,20 @@
     "author": "Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Java 21": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
-      "Java 11": "ghcr.io/pterodactyl/yolks:java_11",
-      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Midnight Java 11": "ghcr.io/midnight-panel/java:11",
+      "Midnight Java 8": "ghcr.io/midnight-panel/java:8",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{JVM_ARGS}} -jar {{JARFILE}} {{APP_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGTERM",
     "configFiles": [],
     "startupDone": "",
     "installScript": "#!/bin/bash\n# Generic Java Application Installation Script for Midnight Panel\nset -e\napk add --no-cache curl ca-certificates\n\ncd /mnt/server\nif [ ! -z \"${DOWNLOAD_URL}\" ]; then\n    echo \"Downloading JAR from ${DOWNLOAD_URL}...\"\n    curl -o \"${JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\nfi\n\necho \"Installation complete! Please upload your JAR file if not downloaded automatically.\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

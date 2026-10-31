@@ -12,11 +12,12 @@
     "author": "SpigotMC & Midnight Team",
     "version": "1.21",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17",
-      "Java 8": "ghcr.io/pterodactyl/yolks:java_8"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Midnight Java 8": "ghcr.io/midnight-panel/java:8",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
     "stopCommand": "end",
     "stopSignal": "SIGTERM",
@@ -31,7 +32,7 @@
     ],
     "startupDone": "Listening on /",
     "installScript": "#!/bin/bash\n# BungeeCord Installation Script for Midnight Panel\nset -e\napk add --no-cache curl\n\ncd /mnt/server\n\necho \"Downloading latest BungeeCord build from SpigotMC CI...\"\nDOWNLOAD_URL=\"https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar\"\ncurl -o \"${SERVER_JARFILE}\" -fSL \"${DOWNLOAD_URL}\"\n\necho \"BungeeCord installation complete!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

@@ -12,17 +12,18 @@
     "author": "Studio Wildcard & Midnight Team",
     "version": "1.0.0",
     "dockerImages": {
-      "Source / Unreal Linux": "ghcr.io/pterodactyl/games:source",
-      "Debian Bookworm": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight ARK Dedicated": "ghcr.io/midnight-panel/games:source",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/games:source",
+    "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./ShooterGame/Binaries/Linux/ShooterGameServer {{MAP_NAME}}?listen?SessionName={{SESSION_NAME}}?ServerPassword={{SERVER_PASSWORD}}?ServerAdminPassword={{ADMIN_PASSWORD}}?Port={{SERVER_PORT}}?QueryPort={{QUERY_PORT}}?MaxPlayers={{MAX_PLAYERS}} {{ADDITIONAL_ARGS}} -server -log",
     "stopCommand": "doexit",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "Server: \"ShooterGameServer\" has successfully started!",
     "installScript": "#!/bin/bash\n# ARK: Survival Evolved Installation Script for Midnight Panel\nset -e\napt update && apt install -y curl lib32gcc-s1 ca-certificates\n\ncd /tmp\nmkdir -p /tmp/steamcmd\ncd /tmp/steamcmd\ncurl -sSL -o steamcmd.tar.gz \"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz\"\ntar -xzf steamcmd.tar.gz\n\necho \"Installing ARK: Survival Evolved (App ID 376030)...\"\n./steamcmd.sh +force_install_dir /mnt/server +login anonymous +app_update 376030 validate +quit\n\ncd /mnt/server\nchmod +x ShooterGame/Binaries/Linux/ShooterGameServer\necho \"ARK installation completed!\"\n",
-    "installImage": "ghcr.io/pterodactyl/installers:debian",
+    "installImage": "ghcr.io/midnight-panel/installers:debian",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": false,

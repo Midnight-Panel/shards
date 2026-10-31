@@ -1,6 +1,6 @@
 {
   "schemaVersion": "midnight_shard_catalog_v1",
-  "generatedAt": "2026-10-31T14:18:02.546Z",
+  "generatedAt": "2026-10-31T14:25:17.833Z",
   "totalShards": 25,
   "shards": [
     {
@@ -32,7 +32,7 @@
       "description": "7 Days to Die dedicated server for voxel-based zombie survival horror sandbox.",
       "author": "The Fun Pimps & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/7daystodie.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/7daystodie.json"
     },
@@ -43,7 +43,7 @@
       "description": "ARK: Survival Evolved dedicated Linux server with customizable maps, player limits, and full mod support.",
       "author": "Studio Wildcard & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/ark-se.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/ark-se.json"
     },
@@ -54,7 +54,7 @@
       "description": "Valve's Counter-Strike 2 dedicated server built on the Source 2 engine with sub-tick updates and dynamic lighting.",
       "author": "Valve & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/cs2.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/cs2.json"
     },
@@ -65,7 +65,7 @@
       "description": "Palworld dedicated multiplayer server for monster-catching, crafting, base-building, and exploration.",
       "author": "Pocketpair & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/palworld.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/palworld.json"
     },
@@ -76,7 +76,7 @@
       "description": "Hardcore isometric zombie survival multiplayer dedicated server by The Indie Stone.",
       "author": "The Indie Stone & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/project-zomboid.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/project-zomboid.json"
     },
@@ -87,7 +87,7 @@
       "description": "Rust dedicated server with SteamCMD updater, procedural and custom map support, Oxide/uMod compatibility and WebSockets RCON.",
       "author": "Facepunch Studios & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:rust",
+      "defaultImage": "ghcr.io/midnight-panel/games:rust",
       "file": "games/rust.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/rust.json"
     },
@@ -98,7 +98,7 @@
       "description": "Valve's legendary team-based multiplayer first-person shooter dedicated server on the Source engine.",
       "author": "Valve & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/tf2.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/tf2.json"
     },
@@ -109,7 +109,7 @@
       "description": "Terraria multiplayer server running TShock for permissions, anti-griefing protection, and plugins.",
       "author": "Pryaxis & Midnight Team",
       "version": "5.2.0",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:dotnet_8",
+      "defaultImage": "ghcr.io/midnight-panel/base:debian",
       "file": "games/terraria-tshock.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/terraria-tshock.json"
     },
@@ -120,7 +120,7 @@
       "description": "Viking survival and exploration multiplayer dedicated server in a procedurally generated purgatory inspired by Norse mythology.",
       "author": "Iron Gate Studio & Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/games:source",
+      "defaultImage": "ghcr.io/midnight-panel/games:source",
       "file": "games/valheim.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/valheim.json"
     },
@@ -131,7 +131,7 @@
       "description": "Official Minecraft Bedrock Dedicated Server software (BDS) supporting mobile, console and Windows cross-play.",
       "author": "Mojang Studios & Midnight Team",
       "version": "1.21.50",
-      "defaultImage": "ghcr.io/pterodactyl/games:bedrock",
+      "defaultImage": "ghcr.io/midnight-panel/games:bedrock",
       "file": "minecraft/bedrock.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/bedrock.json"
     },
@@ -142,7 +142,7 @@
       "description": "The classic, widely-adopted proxy server linking multiple Minecraft instances together seamlessly.",
       "author": "SpigotMC & Midnight Team",
       "version": "1.21",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/bungeecord.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/bungeecord.json"
     },
@@ -153,7 +153,7 @@
       "description": "Fabric is a lightweight, experimental modding toolchain for Minecraft with fast load times and minimal performance impact.",
       "author": "FabricMC & Midnight Team",
       "version": "1.21.4",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/fabric.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/fabric.json"
     },
@@ -164,7 +164,7 @@
       "description": "The community-driven modding platform for Minecraft, carrying forward the legacy of Forge with modern tooling.",
       "author": "NeoForged & Midnight Team",
       "version": "1.21.1",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/neoforge.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/neoforge.json"
     },
@@ -175,7 +175,7 @@
       "description": "High-performance fork of Spigot aiming to fix gameplay and mechanics inconsistencies as well as to drastically improve performance.",
       "author": "PaperMC & Midnight Team",
       "version": "1.21.4",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/paper.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/paper.json"
     },
@@ -186,7 +186,7 @@
       "description": "Drop-in replacement for Paper servers designed for configurability, new fun gameplay mechanics and high performance.",
       "author": "PurpurMC & Midnight Team",
       "version": "1.21.4",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/purpur.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/purpur.json"
     },
@@ -197,7 +197,7 @@
       "description": "The official Minecraft server software directly provided and maintained by Mojang Studios.",
       "author": "Mojang Studios & Midnight Team",
       "version": "1.21.4",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/vanilla.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/vanilla.json"
     },
@@ -208,7 +208,7 @@
       "description": "Next-generation high-performance Minecraft proxy powered by PaperMC, designed with modern architecture and unmatched scalability.",
       "author": "PaperMC & Midnight Team",
       "version": "3.3.0",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "minecraft/velocity.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/velocity.json"
     },
@@ -219,7 +219,7 @@
       "description": "Run any standard executable Java application, Spring Boot microservice, or standalone JAR.",
       "author": "Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "software/generic-java.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/generic-java.json"
     },
@@ -230,7 +230,7 @@
       "description": "Compiled Go application runner with support for building from Git sources or executing Linux x86_64 prebuilt binaries.",
       "author": "Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:go_1.23",
+      "defaultImage": "ghcr.io/midnight-panel/golang:1.23",
       "file": "software/golang.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/golang.json"
     },
@@ -241,7 +241,7 @@
       "description": "General-purpose Node.js environment supporting Git auto-pull, npm dependency installation, and JavaScript/TypeScript Discord bots and web services.",
       "author": "Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:nodejs_20",
+      "defaultImage": "ghcr.io/midnight-panel/nodejs:20",
       "file": "software/nodejs.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/nodejs.json"
     },
@@ -252,7 +252,7 @@
       "description": "General-purpose Python 3 environment supporting Git auto-pull, requirements.txt dependency installation, and Discord bots or Flask/FastAPI services.",
       "author": "Midnight Team",
       "version": "1.0.0",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:python_3.12",
+      "defaultImage": "ghcr.io/midnight-panel/python:3.12",
       "file": "software/python.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/python.json"
     },
@@ -263,7 +263,7 @@
       "description": "Standalone audio sending node based on Java and Kotlin, designed for streaming audio to Discord bot voice connections.",
       "author": "freyacodes & Midnight Team",
       "version": "4.0.8",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:java_21",
+      "defaultImage": "ghcr.io/midnight-panel/java:21",
       "file": "voice-media/lavalink.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/voice-media/lavalink.json"
     },
@@ -274,7 +274,7 @@
       "description": "High-performance, low-latency crystal-clear voice communication server for online communities.",
       "author": "TeamSpeak Systems & Midnight Team",
       "version": "3.13.7",
-      "defaultImage": "ghcr.io/pterodactyl/yolks:debian",
+      "defaultImage": "ghcr.io/midnight-panel/base:debian",
       "file": "voice-media/teamspeak3.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/voice-media/teamspeak3.json"
     }

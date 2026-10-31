@@ -12,10 +12,11 @@
     "author": "NeoForged & Midnight Team",
     "version": "1.21.1",
     "dockerImages": {
-      "Java 21 (Recommended)": "ghcr.io/pterodactyl/yolks:java_21",
-      "Java 17": "ghcr.io/pterodactyl/yolks:java_17"
+      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
+      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
     },
-    "defaultDockerImage": "ghcr.io/pterodactyl/yolks:java_21",
+    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "./run.sh nogui",
     "stopCommand": "stop",
     "stopSignal": "SIGTERM",
@@ -31,7 +32,7 @@
     ],
     "startupDone": ") Done (",
     "installScript": "#!/bin/bash\n# NeoForge Server Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq openjdk21-jre-headless\n\ncd /mnt/server\n\nif [ -z \"${NEOFORGE_VERSION}\" ] || [ \"${NEOFORGE_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest NeoForge version...\"\n    NEOFORGE_VERSION=$(curl -s https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge | jq -r '.versions[-1]')\nfi\n\necho \"Target NeoForge version: ${NEOFORGE_VERSION}\"\nINSTALLER_URL=\"https://maven.neoforged.net/releases/net/neoforged/neoforge/${NEOFORGE_VERSION}/neoforge-${NEOFORGE_VERSION}-installer.jar\"\n\necho \"Downloading NeoForge installer from ${INSTALLER_URL}...\"\ncurl -o installer.jar -fSL \"${INSTALLER_URL}\"\n\necho \"Running NeoForge server installation...\"\njava -jar installer.jar --installServer\nrm -f installer.jar\n\nif [ -f \"run.sh\" ]; then\n    chmod +x run.sh\nfi\n\necho \"eula=true\" > eula.txt\necho \"NeoForge installation completed!\"\n",
-    "installImage": "ghcr.io/midnightpanel/installers:alpine",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
       "eula": true,
