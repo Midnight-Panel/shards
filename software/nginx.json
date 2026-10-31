@@ -1,0 +1,61 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Software & Bots",
+    "description": "Application runtimes, Discord bots, APIs and microservices",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Nginx Web Server",
+    "description": "High performance, lightweight HTTP web server and reverse proxy for static websites, HTML5 games, and custom web apps.",
+    "author": "Nginx Inc. & Midnight Team",
+    "version": "1.26",
+    "dockerImages": {
+      "Nginx Mainline (Alpine)": "nginx:alpine",
+      "Midnight Alpine Base": "ghcr.io/midnight-panel/base:alpine"
+    },
+    "defaultDockerImage": "nginx:alpine",
+    "startupCommand": "nginx -c /home/container/nginx.conf -g \"daemon off;\"",
+    "stopCommand": "nginx -s quit",
+    "stopSignal": "SIGQUIT",
+    "configFiles": [
+      {
+        "path": "nginx.conf",
+        "parser": "properties",
+        "mappings": {}
+      }
+    ],
+    "startupDone": "",
+    "installScript": "#!/bin/sh\n# Nginx Installation Script for Midnight Panel\nset -e\ncd /mnt/server\nmkdir -p html logs /tmp/client_temp /tmp/proxy_temp_path /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp\n\ncat << 'EOF' > nginx.conf\nworker_processes 1;\npid /tmp/nginx.pid;\nerror_log /home/container/logs/error.log warn;\n\nevents {\n    worker_connections 1024;\n}\n\nhttp {\n    include /etc/nginx/mime.types;\n    default_type application/octet-stream;\n    access_log /home/container/logs/access.log;\n    sendfile on;\n    keepalive_timeout 65;\n\n    client_body_temp_path /tmp/client_temp;\n    proxy_temp_path /tmp/proxy_temp_path;\n    fastcgi_temp_path /tmp/fastcgi_temp;\n    uwsgi_temp_path /tmp/uwsgi_temp;\n    scgi_temp_path /tmp/scgi_temp;\n\n    server {\n        listen {{SERVER_PORT}};\n        server_name {{SERVER_NAME}};\n        root /home/container/html;\n        index {{INDEX_PAGE}} index.htm;\n\n        location / {\n            try_files $uri $uri/ =404;\n        }\n    }\n}\nEOF\n\ncat << 'EOF' > html/index.html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Welcome to Midnight Panel</title>\n    <style>\n        body { background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }\n        .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 2rem 3rem; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }\n        h1 { color: #818cf8; margin-top: 0; }\n        p { color: #94a3b8; }\n    </style>\n</head>\n<body>\n    <div class=\"card\">\n        <h1>🌙 Midnight Web Server</h1>\n        <p>Nginx is running successfully on Midnight Panel!</p>\n        <p>Replace this file at <code>/html/index.html</code> with your web project.</p>\n    </div>\n</body>\n</html>\nEOF\n\necho \"Nginx setup completed!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
+    "installInterpreter": "/bin/sh",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Server Domain / Name",
+        "description": "Server hostname or domain (e.g. localhost or yourdomain.com).",
+        "envVariable": "SERVER_NAME",
+        "defaultValue": "localhost",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      },
+      {
+        "name": "Default Index File",
+        "description": "The default index document.",
+        "envVariable": "INDEX_PAGE",
+        "defaultValue": "index.html",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 2
+      }
+    ]
+  }
+}

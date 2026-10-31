@@ -1,0 +1,46 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Software & Bots",
+    "description": "Application runtimes, Discord bots, APIs and microservices",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Uptime Kuma",
+    "description": "Easy-to-use, fancy, self-hosted monitoring tool with status pages, uptime tracking, and notification integrations (Discord, Telegram, Webhook, etc.).",
+    "author": "Louis Lam & Midnight Team",
+    "version": "1.23.16",
+    "dockerImages": {
+      "Midnight Node.js 20": "ghcr.io/midnight-panel/nodejs:20",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Official Uptime Kuma": "louislam/uptime-kuma:1"
+    },
+    "defaultDockerImage": "ghcr.io/midnight-panel/nodejs:20",
+    "startupCommand": "node server/server.js --port={{SERVER_PORT}} --host=0.0.0.0 --data-dir=/home/container/data",
+    "stopCommand": "",
+    "stopSignal": "SIGINT",
+    "configFiles": [],
+    "startupDone": "Listening on 0.0.0.0:",
+    "installScript": "#!/bin/bash\n# Uptime Kuma Installation Script for Midnight Panel\nset -e\napk add --no-cache curl jq tar git python3 make g++\n\ncd /mnt/server\nmkdir -p data\n\nif [ -z \"${UPTIME_KUMA_VERSION}\" ] || [ \"${UPTIME_KUMA_VERSION}\" == \"latest\" ]; then\n    echo \"Resolving latest Uptime Kuma release from GitHub...\"\n    UPTIME_KUMA_VERSION=$(curl -s https://api.github.com/repos/louislam/uptime-kuma/releases/latest | jq -r .tag_name)\nfi\n\necho \"Downloading Uptime Kuma release ${UPTIME_KUMA_VERSION}...\"\ncurl -sSL \"https://github.com/louislam/uptime-kuma/archive/refs/tags/${UPTIME_KUMA_VERSION}.tar.gz\" | tar -xz --strip-components=1\n\necho \"Installing dependencies...\"\nnpm install --production\nnpm run download-dist\n\necho \"Uptime Kuma setup complete!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Uptime Kuma Version",
+        "description": "Release tag to install (e.g. 1.23.16 or 'latest').",
+        "envVariable": "UPTIME_KUMA_VERSION",
+        "defaultValue": "1.23.16",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      }
+    ]
+  }
+}

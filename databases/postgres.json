@@ -1,0 +1,67 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Databases",
+    "description": "In-memory caches, relational SQL engines and key-value datastores",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "PostgreSQL",
+    "description": "Powerful, open-source object-relational database system known for reliability, feature robustness, and performance.",
+    "author": "PostgreSQL Global Development Group & Midnight Team",
+    "version": "16",
+    "dockerImages": {
+      "PostgreSQL 16 (Alpine)": "postgres:16-alpine",
+      "PostgreSQL 17 (Alpine)": "postgres:17-alpine",
+      "PostgreSQL 15 (Alpine)": "postgres:15-alpine",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
+    },
+    "defaultDockerImage": "postgres:16-alpine",
+    "startupCommand": "if [ ! -f /home/container/data/PG_VERSION ]; then initdb -D /home/container/data -U {{POSTGRES_USER}} -E UTF8 --pwfile=<(echo -n \"{{POSTGRES_PASSWORD}}\"); echo \"host all all 0.0.0.0/0 md5\" >> /home/container/data/pg_hba.conf; fi; postgres -D /home/container/data -p {{SERVER_PORT}} -h 0.0.0.0",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "database system is ready to accept connections",
+    "installScript": "#!/bin/sh\n# PostgreSQL Installation Script for Midnight Panel\nset -e\nmkdir -p /mnt/server/data\necho \"PostgreSQL directories prepared!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
+    "installInterpreter": "/bin/sh",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Database User",
+        "description": "Superuser username created upon initial database cluster initialization.",
+        "envVariable": "POSTGRES_USER",
+        "defaultValue": "midnight",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 1
+      },
+      {
+        "name": "Database Password",
+        "description": "Password for the database superuser.",
+        "envVariable": "POSTGRES_PASSWORD",
+        "defaultValue": "ChangeMePostgres123!",
+        "userViewable": false,
+        "userEditable": true,
+        "rules": "required|string|min:6",
+        "sortOrder": 2
+      },
+      {
+        "name": "Default Database",
+        "description": "Default database name.",
+        "envVariable": "POSTGRES_DB",
+        "defaultValue": "midnight_db",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:32",
+        "sortOrder": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Software & Bots",
+    "description": "Application runtimes, Discord bots, APIs and microservices",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Midnight Reverse Proxy",
+    "description": "Modern, self-hosted reverse proxy powered by Caddy. Features automatic HTTPS/TLS, transparent WebSocket forwarding, load balancing, and header rewriting.",
+    "author": "Midnight Team",
+    "version": "1.0.0",
+    "dockerImages": {
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
+      "Official Caddy": "caddy:alpine"
+    },
+    "defaultDockerImage": "ghcr.io/midnight-panel/base:debian",
+    "startupCommand": "./caddy run --config /home/container/Caddyfile --adapter caddyfile",
+    "stopCommand": "./caddy stop",
+    "stopSignal": "SIGINT",
+    "configFiles": [
+      {
+        "path": "Caddyfile",
+        "parser": "properties",
+        "mappings": {}
+      }
+    ],
+    "startupDone": "serving initial configuration",
+    "installScript": "#!/bin/bash\n# Midnight Reverse Proxy Installation Script\nset -e\napk add --no-cache curl tar\n\ncd /mnt/server\nARCH=$(uname -m)\nif [ \"$ARCH\" = \"x86_64\" ]; then\n    BIN_ARCH=\"linux_amd64\"\nelif [ \"$ARCH\" = \"aarch64\" ]; then\n    BIN_ARCH=\"linux_arm64\"\nelse\n    BIN_ARCH=\"linux_amd64\"\nfi\n\necho \"Downloading Caddy core for $BIN_ARCH...\"\ncurl -sSL -o caddy.tar.gz \"https://github.com/caddyserver/caddy/releases/latest/download/caddy_${BIN_ARCH#linux_}_${BIN_ARCH}.tar.gz\"\ntar -xzf caddy.tar.gz caddy\nrm -f caddy.tar.gz\nchmod +x caddy\n\nif [ ! -f \"Caddyfile\" ]; then\ncat << 'EOF' > Caddyfile\n:{{SERVER_PORT}} {\n    reverse_proxy {{UPSTREAM_TARGET}} {\n        header_up Host {upstream_hostport}\n        header_up X-Real-IP {remote_host}\n        header_up X-Forwarded-For {remote_host}\n        header_up X-Forwarded-Proto {scheme}\n    }\n    log {\n        output file /home/container/access.log\n    }\n}\nEOF\nfi\n\necho \"Midnight Reverse Proxy installation complete!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Upstream Target",
+        "description": "The destination address and port to proxy traffic to (e.g. 172.17.0.1:8080 or example.com:3000).",
+        "envVariable": "UPSTREAM_TARGET",
+        "defaultValue": "127.0.0.1:8080",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      }
+    ]
+  }
+}

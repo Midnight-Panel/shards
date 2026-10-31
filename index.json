@@ -1,7 +1,7 @@
 {
   "schemaVersion": "midnight_shard_catalog_v1",
-  "generatedAt": "2026-10-31T14:26:02.668Z",
-  "totalShards": 25,
+  "generatedAt": "2026-10-31T14:31:09.285Z",
+  "totalShards": 32,
   "shards": [
     {
       "id": "mariadb",
@@ -13,6 +13,28 @@
       "defaultImage": "mariadb:11.4",
       "file": "databases/mariadb.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/databases/mariadb.json"
+    },
+    {
+      "id": "mongodb",
+      "collection": "Databases",
+      "name": "MongoDB",
+      "description": "Leading modern document-based NoSQL database designed for ease of development and scaling.",
+      "author": "MongoDB Inc. & Midnight Team",
+      "version": "7.0",
+      "defaultImage": "mongo:7.0",
+      "file": "databases/mongodb.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/databases/mongodb.json"
+    },
+    {
+      "id": "postgres",
+      "collection": "Databases",
+      "name": "PostgreSQL",
+      "description": "Powerful, open-source object-relational database system known for reliability, feature robustness, and performance.",
+      "author": "PostgreSQL Global Development Group & Midnight Team",
+      "version": "16",
+      "defaultImage": "postgres:16-alpine",
+      "file": "databases/postgres.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/databases/postgres.json"
     },
     {
       "id": "redis",
@@ -213,6 +235,17 @@
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/minecraft/velocity.json"
     },
     {
+      "id": "cloudflared",
+      "collection": "Software & Bots",
+      "name": "Cloudflare Tunnel",
+      "description": "Cloudflared zero-trust connector daemon allowing secure outbound tunnels to publish game servers and web apps without open router ports.",
+      "author": "Cloudflare & Midnight Team",
+      "version": "1.0.0",
+      "defaultImage": "ghcr.io/midnight-panel/base:debian",
+      "file": "software/cloudflared.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/cloudflared.json"
+    },
+    {
       "id": "generic-java",
       "collection": "Software & Bots",
       "name": "Generic Java",
@@ -235,6 +268,39 @@
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/golang.json"
     },
     {
+      "id": "mail-server",
+      "collection": "Software & Bots",
+      "name": "Mail Server (Mailpit)",
+      "description": "High-performance standalone SMTP mail server with an integrated webmail UI, REST API, and message inspector. Ideal for hosting mail services, password-reset testing, and Discord bot email handling.",
+      "author": "Axllent & Midnight Team",
+      "version": "1.21.8",
+      "defaultImage": "ghcr.io/midnight-panel/base:debian",
+      "file": "software/mail-server.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/mail-server.json"
+    },
+    {
+      "id": "reverse-proxy",
+      "collection": "Software & Bots",
+      "name": "Midnight Reverse Proxy",
+      "description": "Modern, self-hosted reverse proxy powered by Caddy. Features automatic HTTPS/TLS, transparent WebSocket forwarding, load balancing, and header rewriting.",
+      "author": "Midnight Team",
+      "version": "1.0.0",
+      "defaultImage": "ghcr.io/midnight-panel/base:debian",
+      "file": "software/reverse-proxy.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/reverse-proxy.json"
+    },
+    {
+      "id": "nginx",
+      "collection": "Software & Bots",
+      "name": "Nginx Web Server",
+      "description": "High performance, lightweight HTTP web server and reverse proxy for static websites, HTML5 games, and custom web apps.",
+      "author": "Nginx Inc. & Midnight Team",
+      "version": "1.26",
+      "defaultImage": "nginx:alpine",
+      "file": "software/nginx.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/nginx.json"
+    },
+    {
       "id": "nodejs",
       "collection": "Software & Bots",
       "name": "Node.js",
@@ -255,6 +321,17 @@
       "defaultImage": "ghcr.io/midnight-panel/python:3.12",
       "file": "software/python.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/python.json"
+    },
+    {
+      "id": "uptime-kuma",
+      "collection": "Software & Bots",
+      "name": "Uptime Kuma",
+      "description": "Easy-to-use, fancy, self-hosted monitoring tool with status pages, uptime tracking, and notification integrations (Discord, Telegram, Webhook, etc.).",
+      "author": "Louis Lam & Midnight Team",
+      "version": "1.23.16",
+      "defaultImage": "ghcr.io/midnight-panel/nodejs:20",
+      "file": "software/uptime-kuma.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/uptime-kuma.json"
     },
     {
       "id": "lavalink",

@@ -1,0 +1,46 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Databases",
+    "description": "In-memory caches, relational SQL engines and key-value datastores",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "MongoDB",
+    "description": "Leading modern document-based NoSQL database designed for ease of development and scaling.",
+    "author": "MongoDB Inc. & Midnight Team",
+    "version": "7.0",
+    "dockerImages": {
+      "MongoDB 7.0": "mongo:7.0",
+      "MongoDB 6.0": "mongo:6.0",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
+    },
+    "defaultDockerImage": "mongo:7.0",
+    "startupCommand": "mongod --port {{SERVER_PORT}} --dbpath /home/container/data --bind_ip 0.0.0.0 {{ADDITIONAL_ARGS}}",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [],
+    "startupDone": "Waiting for connections",
+    "installScript": "#!/bin/sh\n# MongoDB Installation Script for Midnight Panel\nset -e\nmkdir -p /mnt/server/data\necho \"MongoDB storage directories ready!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
+    "installInterpreter": "/bin/sh",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "Additional Arguments",
+        "description": "Command-line flags passed to mongod (e.g. --wiredTigerCacheSizeGB 1 or --auth).",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "--wiredTigerCacheSizeGB 1",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 1
+      }
+    ]
+  }
+}

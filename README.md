@@ -22,7 +22,7 @@ See the full [Containers Specification and Guide](containers/README.md) for Dock
 
 ## 📦 Shard Collections & Catalog
 
-The repository currently includes **25 verified Shards** across 5 collections:
+The repository currently includes **32 verified Shards** across 5 collections:
 
 ### 🎮 Minecraft (`minecraft/`)
 | Shard | File | Version | Default Docker Image | Description |
@@ -49,9 +49,14 @@ The repository currently includes **25 verified Shards** across 5 collections:
 | **7 Days to Die** | [`7daystodie.json`](games/7daystodie.json) | 294420 | `ghcr.io/midnight-panel/games:source` | Voxel zombie sandbox survival server |
 | **Project Zomboid** | [`project-zomboid.json`](games/project-zomboid.json) | 380870 | `ghcr.io/midnight-panel/games:source` | Hardcore isometric zombie survival server |
 
-### 🤖 Software & Bots (`software/`)
+### 🤖 Software, Tools & Bots (`software/`)
 | Shard | File | Default Docker Image | Description |
 |---|---|---|---|
+| **Uptime Kuma** | [`uptime-kuma.json`](software/uptime-kuma.json) | `ghcr.io/midnight-panel/nodejs:20` | Fancy self-hosted monitoring and status pages |
+| **Cloudflare Tunnel** | [`cloudflared.json`](software/cloudflared.json) | `ghcr.io/midnight-panel/base:debian` | Expose games/apps to web without open router ports |
+| **Nginx Web Server** | [`nginx.json`](software/nginx.json) | `nginx:alpine` | Static websites, HTML5 games, custom web hosting |
+| **Midnight Reverse Proxy** | [`reverse-proxy.json`](software/reverse-proxy.json) | `ghcr.io/midnight-panel/base:debian` | Caddy-based proxy with WebSockets, TLS & load balancing |
+| **Mail Server (Mailpit)** | [`mail-server.json`](software/mail-server.json) | `ghcr.io/midnight-panel/base:debian` | Standalone SMTP server with Webmail UI for testing & bots |
 | **Node.js** | [`nodejs.json`](software/nodejs.json) | `ghcr.io/midnight-panel/nodejs:20` | Discord.js, Express, Fastify, APIs & microservices |
 | **Python** | [`python.json`](software/python.json) | `ghcr.io/midnight-panel/python:3.12` | Discord.py, FastAPI, Flask, background scripts |
 | **Generic Java** | [`generic-java.json`](software/generic-java.json) | `ghcr.io/midnight-panel/java:21` | Spring Boot, runnable JAR files, standalone Java apps |
@@ -66,6 +71,8 @@ The repository currently includes **25 verified Shards** across 5 collections:
 ### 🗄️ Databases (`databases/`)
 | Shard | File | Default Port | Default Docker Image | Description |
 |---|---|---|---|---|
+| **PostgreSQL** | [`postgres.json`](databases/postgres.json) | 5432 | `postgres:16-alpine` | Robust object-relational SQL database engine |
+| **MongoDB** | [`mongodb.json`](databases/mongodb.json) | 27017 | `mongo:7.0` | Leading document-based NoSQL database |
 | **Redis** | [`redis.json`](databases/redis.json) | 6379 | `redis:7-alpine` | In-memory key-value cache and message broker |
 | **MariaDB** | [`mariadb.json`](databases/mariadb.json) | 3306 | `mariadb:11.4` | High performance relational SQL database |
 
@@ -93,70 +100,6 @@ curl -X POST https://your-midnight-panel.com/api/admin/shards/import \
 
 ---
 
-## 🛠️ Shard Format Specification (`midnight_shard_v1`)
-
-Midnight Shards use a modern, strictly typed JSON format:
-
-```json
-{
-  "formatVersion": "midnight_shard_v1",
-  "exportedAt": "2026-10-31T12:00:00Z",
-  "collection": {
-    "name": "Minecraft",
-    "description": "Minecraft game servers and proxies",
-    "author": "Midnight Team"
-  },
-  "shard": {
-    "name": "Paper",
-    "description": "High performance Minecraft server software.",
-    "author": "PaperMC & Midnight Team",
-    "version": "1.21.4",
-    "dockerImages": {
-      "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
-      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
-      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
-    },
-    "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
-    "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
-    "stopCommand": "stop",
-    "stopSignal": "SIGTERM",
-    "configFiles": [
-      {
-        "path": "server.properties",
-        "parser": "properties",
-        "mappings": {
-          "server-port": "{{SERVER_PORT}}",
-          "server-ip": "{{SERVER_IP}}"
-        }
-      }
-    ],
-    "startupDone": ") Done (",
-    "installScript": "#!/bin/bash\n...",
-    "installImage": "ghcr.io/midnight-panel/installers:alpine",
-    "installInterpreter": "/bin/bash",
-    "features": {
-      "eula": true,
-      "pidLimit": null,
-      "fileDenylist": []
-    },
-    "variables": [
-      {
-        "name": "Server Jar File",
-        "description": "Executable jar file to run the server.",
-        "envVariable": "SERVER_JARFILE",
-        "defaultValue": "server.jar",
-        "userViewable": true,
-        "userEditable": true,
-        "rules": "required|string|max:40",
-        "sortOrder": 1
-      }
-    ]
-  }
-}
-```
-
----
-
 ## 🧪 Testing & Validation
 
 To validate all Shards and update [`index.json`](index.json):
@@ -168,16 +111,6 @@ node tools/validate.js
 ```
 
 All Pull Requests are automatically tested with GitHub Actions.
-
----
-
-## 🤝 Contributing
-
-1. Fork this repository.
-2. Create a new shard in the appropriate category folder (e.g. `games/mygame.json`).
-3. Follow the `midnight_shard_v1` specification.
-4. Run `npm test` to validate syntax and placeholders and update `index.json`.
-5. Submit a Pull Request.
 
 ---
 
