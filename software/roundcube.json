@@ -1,0 +1,112 @@
+{
+  "formatVersion": "midnight_shard_v1",
+  "exportedAt": "2026-10-31T12:00:00Z",
+  "collection": {
+    "name": "Software & Bots",
+    "description": "Application runtimes, Discord bots, APIs and microservices",
+    "author": "Midnight Team"
+  },
+  "shard": {
+    "name": "Roundcube Webmail",
+    "description": "Leading open-source browser-based multilingual IMAP webmail client with a desktop-like user interface, address book, spell checking, and rich MIME support.",
+    "author": "The Roundcube Team & Midnight Team",
+    "version": "1.6.9",
+    "dockerImages": {
+      "Midnight PHP 8.3 (Recommended)": "ghcr.io/midnight-panel/php:8.3",
+      "PHP 8.3 Alpine": "php:8.3-cli-alpine",
+      "Yolks PHP 8.3 (Fallback)": "ghcr.io/pterodactyl/yolks:php_8.3"
+    },
+    "defaultDockerImage": "ghcr.io/midnight-panel/php:8.3",
+    "startupCommand": "php -S 0.0.0.0:{{SERVER_PORT}} {{ADDITIONAL_ARGS}}",
+    "stopCommand": "",
+    "stopSignal": "SIGTERM",
+    "configFiles": [
+      {
+        "path": "config/config.inc.php",
+        "parser": "properties",
+        "mappings": {}
+      }
+    ],
+    "startupDone": "Development Server (http://0.0.0.0:",
+    "installScript": "#!/bin/bash\n# Roundcube Webmail Installation Script for Midnight Panel\nset -e\napk add --no-cache curl tar sqlite\n\ncd /mnt/server\nmkdir -p db logs temp\n\nif [ -z \"${ROUNDCUBE_VERSION}\" ] || [ \"${ROUNDCUBE_VERSION}\" == \"latest\" ]; then\n    ROUNDCUBE_VERSION=\"1.6.9\"\nfi\n\necho \"Downloading Roundcube Webmail v${ROUNDCUBE_VERSION} (complete bundle)...\"\nDOWNLOAD_URL=\"https://github.com/roundcube/roundcubemail/releases/download/${ROUNDCUBE_VERSION}/roundcubemail-${ROUNDCUBE_VERSION}-complete.tar.gz\"\ncurl -sSL -o roundcube.tar.gz \"${DOWNLOAD_URL}\"\ntar -xzf roundcube.tar.gz --strip-components=1\nrm -f roundcube.tar.gz\n\necho \"Initializing local SQLite database...\"\nif [ ! -f \"db/roundcube.db\" ]; then\n    sqlite3 db/roundcube.db < SQL/sqlite.initial.sql\n    chmod 666 db/roundcube.db\nfi\n\nRANDOM_DES_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)\n\necho \"Writing Roundcube config.inc.php...\"\ncat << 'EOF' > config/config.inc.php\n<?php\n$config = [];\n$config['db_dsnw'] = 'sqlite:////home/container/db/roundcube.db?mode=0646';\n$config['default_host'] = '{{DEFAULT_HOST}}';\n$config['default_port'] = {{DEFAULT_PORT}};\n$config['smtp_server'] = '{{SMTP_SERVER}}';\n$config['smtp_port'] = {{SMTP_PORT}};\n$config['smtp_user'] = '%u';\n$config['smtp_pass'] = '%p';\n$config['support_url'] = '';\n$config['product_name'] = '{{PRODUCT_NAME}}';\n$config['plugins'] = ['archive', 'zipdownload'];\n$config['skin'] = 'elastic';\n$config['temp_dir'] = '/home/container/temp';\n$config['log_dir'] = '/home/container/logs';\nEOF\n\nsed -i \"s/{{DEFAULT_HOST}}/${DEFAULT_HOST}/g\" config/config.inc.php\nsed -i \"s/{{DEFAULT_PORT}}/${DEFAULT_PORT}/g\" config/config.inc.php\nsed -i \"s/{{SMTP_SERVER}}/${SMTP_SERVER}/g\" config/config.inc.php\nsed -i \"s/{{SMTP_PORT}}/${SMTP_PORT}/g\" config/config.inc.php\nsed -i \"s/{{PRODUCT_NAME}}/${PRODUCT_NAME}/g\" config/config.inc.php\necho \"$config['des_key'] = '${RANDOM_DES_KEY}';\" >> config/config.inc.php\n\nchmod -R 777 temp logs db\necho \"Roundcube Webmail installation completed!\"\n",
+    "installImage": "ghcr.io/midnight-panel/installers:alpine",
+    "installInterpreter": "/bin/bash",
+    "features": {
+      "eula": false,
+      "pidLimit": null,
+      "fileDenylist": []
+    },
+    "variables": [
+      {
+        "name": "IMAP Server Host",
+        "description": "Hostname or IP of the incoming IMAP server (e.g. ssl://imap.example.com or 127.0.0.1).",
+        "envVariable": "DEFAULT_HOST",
+        "defaultValue": "127.0.0.1",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 1
+      },
+      {
+        "name": "IMAP Server Port",
+        "description": "Port of the IMAP server (e.g. 993 for SSL/TLS, 143 for STARTTLS).",
+        "envVariable": "DEFAULT_PORT",
+        "defaultValue": "993",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 2
+      },
+      {
+        "name": "Outgoing SMTP Host",
+        "description": "Hostname or IP of the outgoing SMTP server (e.g. ssl://smtp.example.com or 127.0.0.1).",
+        "envVariable": "SMTP_SERVER",
+        "defaultValue": "127.0.0.1",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 3
+      },
+      {
+        "name": "Outgoing SMTP Port",
+        "description": "Port of the SMTP server (e.g. 465 for SSL, 587 for STARTTLS, or 1025 for local testing).",
+        "envVariable": "SMTP_PORT",
+        "defaultValue": "587",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|numeric",
+        "sortOrder": 4
+      },
+      {
+        "name": "Product Name",
+        "description": "Title displayed on the webmail login screen and browser tab.",
+        "envVariable": "PRODUCT_NAME",
+        "defaultValue": "Midnight Webmail",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string|max:64",
+        "sortOrder": 5
+      },
+      {
+        "name": "Roundcube Version",
+        "description": "Roundcube release version tag.",
+        "envVariable": "ROUNDCUBE_VERSION",
+        "defaultValue": "1.6.9",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "required|string",
+        "sortOrder": 6
+      },
+      {
+        "name": "Additional Arguments",
+        "description": "Arguments passed to the PHP built-in server.",
+        "envVariable": "ADDITIONAL_ARGS",
+        "defaultValue": "-t /home/container",
+        "userViewable": true,
+        "userEditable": true,
+        "rules": "string",
+        "sortOrder": 7
+      }
+    ]
+  }
+}

@@ -76,6 +76,12 @@ jobs:
             context: ./containers/golang/1.22
             latest: false
 
+          # PHP
+          - name: php
+            tag: "8.3"
+            context: ./containers/php/8.3
+            latest: true
+
           # Game Runtimes
           - name: games
             tag: "source"

@@ -22,7 +22,7 @@ See the full [Containers Specification and Guide](containers/README.md) for Dock
 
 ## 📦 Shard Collections & Catalog
 
-The repository currently includes **32 verified Shards** across 5 collections:
+The repository currently includes **33 verified Shards** across 5 collections:
 
 ### 🎮 Minecraft (`minecraft/`)
 | Shard | File | Version | Default Docker Image | Description |
@@ -52,13 +52,14 @@ The repository currently includes **32 verified Shards** across 5 collections:
 ### 🤖 Software, Tools & Bots (`software/`)
 | Shard | File | Default Docker Image | Description |
 |---|---|---|---|
+| **Roundcube Webmail** | [`roundcube.json`](software/roundcube.json) | `ghcr.io/midnight-panel/php:8.3` | Browser-based IMAP client with rich MIME & address book |
 | **Uptime Kuma** | [`uptime-kuma.json`](software/uptime-kuma.json) | `ghcr.io/midnight-panel/nodejs:20` | Fancy self-hosted monitoring and status pages |
 | **Cloudflare Tunnel** | [`cloudflared.json`](software/cloudflared.json) | `ghcr.io/midnight-panel/base:debian` | Expose games/apps to web without open router ports |
 | **Nginx Web Server** | [`nginx.json`](software/nginx.json) | `nginx:alpine` | Static websites, HTML5 games, custom web hosting |
 | **Midnight Reverse Proxy** | [`reverse-proxy.json`](software/reverse-proxy.json) | `ghcr.io/midnight-panel/base:debian` | Caddy-based proxy with WebSockets, TLS & load balancing |
 | **Mail Server (Mailpit)** | [`mail-server.json`](software/mail-server.json) | `ghcr.io/midnight-panel/base:debian` | Standalone SMTP server with Webmail UI for testing & bots |
-| **Node.js** | [`nodejs.json`](software/nodejs.json) | `ghcr.io/midnight-panel/nodejs:20` | Discord.js, Express, Fastify, APIs & microservices |
-| **Python** | [`python.json`](software/python.json) | `ghcr.io/midnight-panel/python:3.12` | Discord.py, FastAPI, Flask, background scripts |
+| **Node.js** | [`nodejs.json`](software/nodejs.json) | `ghcr.io/midnight-panel/nodejs:20` | Discord.js bots, Express/Koa APIs, Next.js servers |
+| **Python** | [`python.json`](software/python.json) | `ghcr.io/midnight-panel/python:3.12` | Discord.py bots, FastAPI, Flask, background scripts |
 | **Generic Java** | [`generic-java.json`](software/generic-java.json) | `ghcr.io/midnight-panel/java:21` | Spring Boot, runnable JAR files, standalone Java apps |
 | **Golang** | [`golang.json`](software/golang.json) | `ghcr.io/midnight-panel/golang:1.23` | Compiled Go binaries & Git build pipeline |
 

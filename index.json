@@ -1,7 +1,7 @@
 {
   "schemaVersion": "midnight_shard_catalog_v1",
-  "generatedAt": "2026-10-31T14:31:09.285Z",
-  "totalShards": 32,
+  "generatedAt": "2026-10-31T18:09:04.997Z",
+  "totalShards": 33,
   "shards": [
     {
       "id": "mariadb",
@@ -321,6 +321,17 @@
       "defaultImage": "ghcr.io/midnight-panel/python:3.12",
       "file": "software/python.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/python.json"
+    },
+    {
+      "id": "roundcube",
+      "collection": "Software & Bots",
+      "name": "Roundcube Webmail",
+      "description": "Leading open-source browser-based multilingual IMAP webmail client with a desktop-like user interface, address book, spell checking, and rich MIME support.",
+      "author": "The Roundcube Team & Midnight Team",
+      "version": "1.6.9",
+      "defaultImage": "ghcr.io/midnight-panel/php:8.3",
+      "file": "software/roundcube.json",
+      "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/software/roundcube.json"
     },
     {
       "id": "uptime-kuma",
