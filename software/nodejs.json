@@ -17,12 +17,12 @@
       "Midnight Node.js 18": "ghcr.io/midnight-panel/nodejs:18"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/nodejs:20",
-    "startupCommand": "if [[ -d .git ]] && [[ \"{{GIT_AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; if [[ ! -d node_modules ]] || [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; then npm install --production=false; fi; node {{MAIN_FILE}} {{ADDITIONAL_ARGS}}",
+    "startupCommand": "if [[ -d .git ]] && [[ \"{{GIT_AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; if [[ -f package.json ]] && { [[ ! -d node_modules ]] || [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; }; then npm install; fi; node {{MAIN_FILE}} {{ADDITIONAL_ARGS}}",
     "stopCommand": "",
     "stopSignal": "SIGINT",
     "configFiles": [],
     "startupDone": "",
-    "installScript": "#!/bin/bash\n# Node.js Application Installation Script for Midnight Panel\nset -e\napk add --no-cache git curl ca-certificates\n\ncd /mnt/server\n\nif [ ! -z \"${GIT_ADDRESS}\" ]; then\n    echo \"Cloning git repository: ${GIT_ADDRESS}...\"\n    if [ -z \"${GIT_BRANCH}\" ]; then\n        GIT_BRANCH=\"main\"\n    fi\n    git clone -b ${GIT_BRANCH} ${GIT_ADDRESS} .\nfi\n\nif [ -f \"package.json\" ]; then\n    echo \"Found package.json, installing dependencies...\"\n    npm install --production=false\nfi\n\necho \"Node.js application installation completed!\"\n",
+    "installScript": "#!/bin/bash\n# Node.js Application Installation Script for Midnight Panel\nset -e\napk add --no-cache git curl ca-certificates\n\ncd /mnt/server\n\nif [ ! -z \"${GIT_ADDRESS}\" ]; then\n    echo \"Cloning git repository: ${GIT_ADDRESS}...\"\n    if [ -z \"${GIT_BRANCH}\" ]; then\n        GIT_BRANCH=\"main\"\n    fi\n    git clone -b ${GIT_BRANCH} ${GIT_ADDRESS} .\nfi\n\n# Dependencies are installed on the first start inside the Node.js runtime image,\n# so native modules are built for the Node version the server actually runs\nif [ -f \"package.json\" ]; then\n    echo \"Found package.json, dependencies are installed on the first start.\"\nfi\n\necho \"Node.js application installation completed!\"\n",
     "installImage": "ghcr.io/midnight-panel/installers:alpine",
     "installInterpreter": "/bin/bash",
     "features": {
