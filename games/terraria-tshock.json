@@ -12,10 +12,10 @@
     "author": "Pryaxis & Midnight Team",
     "version": "5.2.0",
     "dockerImages": {
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks .NET 8 (Fallback)": "ghcr.io/pterodactyl/yolks:dotnet_8"
+      "Midnight .NET 8 (Recommended)": "ghcr.io/midnight-panel/dotnet:8",
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
-    "defaultDockerImage": "ghcr.io/midnight-panel/base:debian",
+    "defaultDockerImage": "ghcr.io/midnight-panel/dotnet:8",
     "startupCommand": "./TShock.Server -port {{SERVER_PORT}} -maxplayers {{MAX_PLAYERS}} -world \"/mnt/server/Worlds/{{WORLD_NAME}}.wld\" -autocreate {{WORLD_SIZE}} -worldname \"{{WORLD_NAME}}\" -difficulty {{DIFFICULTY}}",
     "stopCommand": "exit",
     "stopSignal": "SIGTERM",

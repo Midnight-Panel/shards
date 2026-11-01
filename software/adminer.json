@@ -13,8 +13,7 @@
     "version": "4.8.1",
     "dockerImages": {
       "Midnight PHP 8.3 (Recommended)": "ghcr.io/midnight-panel/php:8.3",
-      "PHP 8.3 Alpine": "php:8.3-cli-alpine",
-      "Yolks PHP 8.3 (Fallback)": "ghcr.io/pterodactyl/yolks:php_8.3"
+      "PHP 8.3 Alpine": "php:8.3-cli-alpine"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/php:8.3",
     "startupCommand": "php -S 0.0.0.0:{{SERVER_PORT}} {{ADDITIONAL_ARGS}}",

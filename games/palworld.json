@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight Palworld Dedicated": "ghcr.io/midnight-panel/games:source",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./PalServer.sh -port={{SERVER_PORT}} -players={{MAX_PLAYERS}} {{ADDITIONAL_ARGS}}",

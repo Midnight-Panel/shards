@@ -76,6 +76,12 @@ jobs:
             context: ./containers/golang/1.22
             latest: false
 
+          # .NET
+          - name: dotnet
+            tag: "8"
+            context: ./containers/dotnet/8
+            latest: true
+
           # PHP
           - name: php
             tag: "8.3"
@@ -164,3 +170,10 @@ jobs:
           platforms: ${{ matrix.platforms || 'linux/amd64,linux/arm64' }}
           push: true
           tags: ${{ steps.tags.outputs.TAGS }}
+          # Links the package to this repository (shown on the repo page, can inherit its access settings).
+          # Packages are still created private: make each one public once under Package settings → Change visibility,
+          # otherwise nodes can't pull them ("error from registry: unauthorized").
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.description=Midnight Panel ${{ matrix.name }} ${{ matrix.tag }} runtime
+            org.opencontainers.image.licenses=MIT

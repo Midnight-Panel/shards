@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight Source Dedicated": "ghcr.io/midnight-panel/games:source",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./srcds_run -game tf -console +ip 0.0.0.0 +port {{SERVER_PORT}} +map {{START_MAP}} +maxplayers {{MAX_PLAYERS}} {{ADDITIONAL_ARGS}}",

@@ -14,8 +14,7 @@
     "dockerImages": {
       "Midnight Node.js 22": "ghcr.io/midnight-panel/nodejs:22",
       "Midnight Node.js 20 (LTS)": "ghcr.io/midnight-panel/nodejs:20",
-      "Midnight Node.js 18": "ghcr.io/midnight-panel/nodejs:18",
-      "Yolks Node.js 20 (Fallback)": "ghcr.io/pterodactyl/yolks:nodejs_20"
+      "Midnight Node.js 18": "ghcr.io/midnight-panel/nodejs:18"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/nodejs:20",
     "startupCommand": "if [[ -d .git ]] && [[ \"{{GIT_AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; if [[ ! -d node_modules ]] || [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; then npm install --production=false; fi; node {{MAIN_FILE}} {{ADDITIONAL_ARGS}}",

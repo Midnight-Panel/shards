@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight FiveM / txAdmin (Recommended)": "ghcr.io/midnight-panel/games:fivem",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks FiveM (Fallback)": "ghcr.io/pterodactyl/games:fivem"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:fivem",
     "startupCommand": "./run.sh +set serverProfile {{SERVER_PROFILE}} +set txAdminPort {{TXADMIN_PORT}} +set net_tcpPort {{SERVER_PORT}} +set net_udpPort {{SERVER_PORT}} {{ADDITIONAL_ARGS}}",

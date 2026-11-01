@@ -14,8 +14,7 @@ const updates = {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
       'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
       'Midnight Java 11': 'ghcr.io/midnight-panel/java:11',
-      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -25,8 +24,7 @@ const updates = {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
       'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
       'Midnight Java 11': 'ghcr.io/midnight-panel/java:11',
-      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -36,8 +34,7 @@ const updates = {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
       'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
       'Midnight Java 11': 'ghcr.io/midnight-panel/java:11',
-      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -46,8 +43,7 @@ const updates = {
     dockerImages: {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
       'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
-      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -55,8 +51,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/java:21',
     dockerImages: {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
-      'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 17': 'ghcr.io/midnight-panel/java:17'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -64,8 +59,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/java:21',
     dockerImages: {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
-      'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 17': 'ghcr.io/midnight-panel/java:17'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -74,8 +68,7 @@ const updates = {
     dockerImages: {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
       'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
-      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -83,8 +76,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:bedrock',
     dockerImages: {
       'Midnight Bedrock Dedicated': 'ghcr.io/midnight-panel/games:bedrock',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Bedrock (Fallback)': 'ghcr.io/pterodactyl/games:bedrock'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -94,8 +86,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:rust',
     dockerImages: {
       'Midnight Rust Dedicated': 'ghcr.io/midnight-panel/games:rust',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Rust (Fallback)': 'ghcr.io/pterodactyl/games:rust'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -103,8 +94,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight Source 2 Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -112,8 +102,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight Palworld Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -121,16 +110,15 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight Valheim Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
   'games/terraria-tshock.json': {
-    defaultDockerImage: 'ghcr.io/midnight-panel/base:debian',
+    defaultDockerImage: 'ghcr.io/midnight-panel/dotnet:8',
     dockerImages: {
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks .NET 8 (Fallback)': 'ghcr.io/pterodactyl/yolks:dotnet_8'
+      'Midnight .NET 8 (Recommended)': 'ghcr.io/midnight-panel/dotnet:8',
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -138,8 +126,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight Source Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -147,8 +134,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight ARK Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -156,8 +142,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight 7D2D Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -165,8 +150,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/games:source',
     dockerImages: {
       'Midnight Zomboid Dedicated': 'ghcr.io/midnight-panel/games:source',
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Source (Fallback)': 'ghcr.io/pterodactyl/games:source'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -177,8 +161,7 @@ const updates = {
     dockerImages: {
       'Midnight Node.js 22': 'ghcr.io/midnight-panel/nodejs:22',
       'Midnight Node.js 20 (LTS)': 'ghcr.io/midnight-panel/nodejs:20',
-      'Midnight Node.js 18': 'ghcr.io/midnight-panel/nodejs:18',
-      'Yolks Node.js 20 (Fallback)': 'ghcr.io/pterodactyl/yolks:nodejs_20'
+      'Midnight Node.js 18': 'ghcr.io/midnight-panel/nodejs:18'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -187,8 +170,7 @@ const updates = {
     dockerImages: {
       'Midnight Python 3.12 (Latest)': 'ghcr.io/midnight-panel/python:3.12',
       'Midnight Python 3.11': 'ghcr.io/midnight-panel/python:3.11',
-      'Midnight Python 3.10': 'ghcr.io/midnight-panel/python:3.10',
-      'Yolks Python 3.12 (Fallback)': 'ghcr.io/pterodactyl/yolks:python_3.12'
+      'Midnight Python 3.10': 'ghcr.io/midnight-panel/python:3.10'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -198,8 +180,7 @@ const updates = {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
       'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
       'Midnight Java 11': 'ghcr.io/midnight-panel/java:11',
-      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 8': 'ghcr.io/midnight-panel/java:8'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -207,8 +188,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/golang:1.23',
     dockerImages: {
       'Midnight Go 1.23 (Latest)': 'ghcr.io/midnight-panel/golang:1.23',
-      'Midnight Go 1.22': 'ghcr.io/midnight-panel/golang:1.22',
-      'Yolks Go 1.23 (Fallback)': 'ghcr.io/pterodactyl/yolks:go_1.23'
+      'Midnight Go 1.22': 'ghcr.io/midnight-panel/golang:1.22'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },
@@ -217,8 +197,7 @@ const updates = {
   'voice-media/teamspeak3.json': {
     defaultDockerImage: 'ghcr.io/midnight-panel/base:debian',
     dockerImages: {
-      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian',
-      'Yolks Debian (Fallback)': 'ghcr.io/pterodactyl/yolks:debian'
+      'Midnight Debian Base': 'ghcr.io/midnight-panel/base:debian'
     },
     installImage: 'ghcr.io/midnight-panel/installers:debian'
   },
@@ -226,8 +205,7 @@ const updates = {
     defaultDockerImage: 'ghcr.io/midnight-panel/java:21',
     dockerImages: {
       'Midnight Java 21 (Recommended)': 'ghcr.io/midnight-panel/java:21',
-      'Midnight Java 17': 'ghcr.io/midnight-panel/java:17',
-      'Yolks Java 21 (Fallback)': 'ghcr.io/pterodactyl/yolks:java_21'
+      'Midnight Java 17': 'ghcr.io/midnight-panel/java:17'
     },
     installImage: 'ghcr.io/midnight-panel/installers:alpine'
   },

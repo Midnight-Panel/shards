@@ -1,6 +1,6 @@
 {
   "schemaVersion": "midnight_shard_catalog_v1",
-  "generatedAt": "2026-10-31T21:10:38.731Z",
+  "generatedAt": "2026-11-01T08:59:10.478Z",
   "totalShards": 35,
   "shards": [
     {
@@ -142,7 +142,7 @@
       "description": "Terraria multiplayer server running TShock for permissions, anti-griefing protection, and plugins.",
       "author": "Pryaxis & Midnight Team",
       "version": "5.2.0",
-      "defaultImage": "ghcr.io/midnight-panel/base:debian",
+      "defaultImage": "ghcr.io/midnight-panel/dotnet:8",
       "file": "games/terraria-tshock.json",
       "rawUrl": "https://raw.githubusercontent.com/Midnight-Panel/shards/main/games/terraria-tshock.json"
     },

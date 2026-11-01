@@ -13,8 +13,7 @@
     "version": "1.21.50",
     "dockerImages": {
       "Midnight Bedrock Dedicated": "ghcr.io/midnight-panel/games:bedrock",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Bedrock (Fallback)": "ghcr.io/pterodactyl/games:bedrock"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:bedrock",
     "startupCommand": "LD_LIBRARY_PATH=. ./bedrock_server",

@@ -26,6 +26,9 @@ All images are built with **Multi-Arch support (`linux/amd64` and `linux/arm64`)
 - `ghcr.io/midnight-panel/python:3.10`
 *Includes `pip`, `wheel`, `setuptools`, `build-essential`, and `ffmpeg`.*
 
+### 🟪 .NET Runtimes (`ghcr.io/midnight-panel/dotnet`)
+- `ghcr.io/midnight-panel/dotnet:8` (TShock / Terraria and other .NET 8 servers)
+
 ### 🐹 Golang Runtimes (`ghcr.io/midnight-panel/golang`)
 - `ghcr.io/midnight-panel/golang:1.23` (Latest / Default)
 - `ghcr.io/midnight-panel/golang:1.22`
@@ -53,3 +56,20 @@ Workflow: [`.github/workflows/build-containers.yml`](../.github/workflows/build-
 
 To trigger manually:
 Go to GitHub ➔ **Actions** ➔ **Build and Publish Containers** ➔ **Run workflow**.
+
+---
+
+## 🔓 Publishing: images must be public
+
+The `Build and Publish Containers` workflow pushes every image to `ghcr.io/midnight-panel/...`. GitHub creates new
+container packages as **private**, and nodes pull without credentials – a private image fails on install with
+`error from registry: unauthorized`.
+
+After an image is published for the first time, make it public once:
+**github.com/orgs/Midnight-Panel/packages → the package → Package settings → Danger Zone → Change visibility → Public**.
+
+Check from any machine (no login needed) that a node can pull it:
+
+```bash
+docker pull ghcr.io/midnight-panel/installers:alpine
+```

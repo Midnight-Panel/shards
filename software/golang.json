@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight Go 1.23 (Latest)": "ghcr.io/midnight-panel/golang:1.23",
-      "Midnight Go 1.22": "ghcr.io/midnight-panel/golang:1.22",
-      "Yolks Go 1.23 (Fallback)": "ghcr.io/pterodactyl/yolks:go_1.23"
+      "Midnight Go 1.22": "ghcr.io/midnight-panel/golang:1.22"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/golang:1.23",
     "startupCommand": "./{{EXECUTABLE}} {{ADDITIONAL_ARGS}}",

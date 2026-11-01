@@ -13,8 +13,7 @@
     "version": "3.3.0",
     "dockerImages": {
       "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
-      "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
-      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
+      "Midnight Java 17": "ghcr.io/midnight-panel/java:17"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",

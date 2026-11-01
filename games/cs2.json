@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight Source 2 Dedicated": "ghcr.io/midnight-panel/games:source",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./game/bin/linuxsteamrt64/cs2 -dedicated +ip 0.0.0.0 -port {{SERVER_PORT}} +map {{START_MAP}} +game_type {{GAME_TYPE}} +game_mode {{GAME_MODE}} +mapgroup {{MAPGROUP}} -maxplayers {{MAXPLAYERS}} +sv_setsteamaccount \"{{GSLT}}\" {{ADDITIONAL_ARGS}}",

@@ -15,8 +15,7 @@
       "Midnight Java 21 (Recommended)": "ghcr.io/midnight-panel/java:21",
       "Midnight Java 17": "ghcr.io/midnight-panel/java:17",
       "Midnight Java 11": "ghcr.io/midnight-panel/java:11",
-      "Midnight Java 8": "ghcr.io/midnight-panel/java:8",
-      "Yolks Java 21 (Fallback)": "ghcr.io/pterodactyl/yolks:java_21"
+      "Midnight Java 8": "ghcr.io/midnight-panel/java:8"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/java:21",
     "startupCommand": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{JVM_ARGS}} -jar {{JARFILE}} {{APP_ARGS}}",

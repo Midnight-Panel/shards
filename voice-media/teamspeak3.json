@@ -12,8 +12,7 @@
     "author": "TeamSpeak Systems & Midnight Team",
     "version": "3.13.7",
     "dockerImages": {
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Debian (Fallback)": "ghcr.io/pterodactyl/yolks:debian"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/base:debian",
     "startupCommand": "./ts3server default_voice_port={{SERVER_PORT}} query_port={{QUERY_PORT}} filetransfer_port={{FILE_PORT}} {{ADDITIONAL_ARGS}}",

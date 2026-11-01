@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight Zomboid Dedicated": "ghcr.io/midnight-panel/games:source",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./start-server.sh -servername \"{{SERVER_NAME}}\" -port {{SERVER_PORT}} -adminpassword \"{{ADMIN_PASSWORD}}\"",

@@ -13,8 +13,7 @@
     "version": "1.0.0",
     "dockerImages": {
       "Midnight 7D2D Dedicated": "ghcr.io/midnight-panel/games:source",
-      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian",
-      "Yolks Source (Fallback)": "ghcr.io/pterodactyl/games:source"
+      "Midnight Debian Base": "ghcr.io/midnight-panel/base:debian"
     },
     "defaultDockerImage": "ghcr.io/midnight-panel/games:source",
     "startupCommand": "./7DaysToDieServer.x86_64 -logfile 7DaysToDie_Data/output_log.txt -quit -batchmode -nographics -dedicated {{ADDITIONAL_ARGS}}",

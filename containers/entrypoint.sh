@@ -18,10 +18,10 @@ echo -e "\033[0m"
 echo -e "\033[1;34m  Midnight Container Runtime Environment\033[0m"
 echo -e "\033[0;90m  https://github.com/Midnight-Panel\033[0m\n"
 
-# Evaluate and replace placeholders in STARTUP string
-MODIFIED_STARTUP=$(eval echo $(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g'))
+# {{VARIABLE}} placeholders become shell variables, the panel usually replaced them already
+MODIFIED_STARTUP=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g')
 
 echo -e "\033[1;32m:/\$ ${MODIFIED_STARTUP}\033[0m\n"
 
-# Execute startup command
-exec env ${MODIFIED_STARTUP}
+# Run through bash: startup commands may use &&, if/then, quotes with spaces and ${VARIABLES}
+exec /bin/bash -c "${MODIFIED_STARTUP}"
